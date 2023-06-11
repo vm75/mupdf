@@ -37,6 +37,10 @@ These are the third party libraries used by :title:`MuPDF`.
      - 9.0e with patches
      - JPEG decoding
      - BSD-style
+   * - libwebp_
+     - 1.3.0
+     - WEBP decoding
+     - BSD-style
    * - `Incompatible fork of lcms2`_
      - 2.14 with patches
      - Color management
@@ -95,6 +99,7 @@ These are the third party libraries used by :title:`MuPDF`.
 .. _freetype: http://www.freetype.org/
 .. _harfbuzz: http://www.harfbuzz.org/
 .. _libjpeg: http://www.ijg.org/
+.. _libwebp: https://www.webmproject.org/
 .. _Incompatible fork of lcms2: http://git.ghostscript.com/?p=thirdparty-lcms2.git;a=summary
 .. _openjpeg: http://www.openjpeg.org/
 .. _zlib: http://www.zlib.net/
