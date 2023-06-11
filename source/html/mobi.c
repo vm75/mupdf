@@ -1,4 +1,4 @@
-// Copyright (C) 2004-2022 Artifex Software, Inc.
+// Copyright (C) 2004-2023 Artifex Software, Inc.
 //
 // This file is part of MuPDF.
 //
@@ -317,7 +317,7 @@ fz_extract_html_from_mobi(fz_context *ctx, fz_buffer *mobi)
 		for (i = extra; i < n; ++i)
 		{
 			uint32_t size = offsets[i+1] - offsets[i];
-			if (size > 8)
+			if (size > 16)
 			{
 				unsigned char *data = mobi->data + offsets[i];
 				if (fz_recognize_image_format(ctx, data))

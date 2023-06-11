@@ -1,4 +1,4 @@
-// Copyright (C) 2004-2021 Artifex Software, Inc.
+// Copyright (C) 2004-2023 Artifex Software, Inc.
 //
 // This file is part of MuPDF.
 //
@@ -49,6 +49,7 @@ static const char *cbz_ext_list[] = {
 	".tif",
 	".tiff",
 	".wdp",
+	".webp",
 	NULL
 };
 

@@ -294,6 +294,9 @@
     <ClCompile Include="..\..\source\fitz\load-tiff.c">
       <Filter>fitz</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\fitz\load-webp.c">
+      <Filter>fitz</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\fitz\memento.c">
       <Filter>fitz</Filter>
     </ClCompile>

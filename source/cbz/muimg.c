@@ -193,7 +193,7 @@ img_open_document_with_stream(fz_context *ctx, fz_stream *file)
 		len = fz_buffer_storage(ctx, doc->buffer, &data);
 
 		fmt = FZ_IMAGE_UNKNOWN;
-		if (len >= 8)
+		if (len >= 16)
 			fmt = fz_recognize_image_format(ctx, data);
 		if (fmt == FZ_IMAGE_TIFF)
 		{
@@ -238,11 +238,11 @@ img_open_document_with_stream(fz_context *ctx, fz_stream *file)
 static int
 img_recognize_content(fz_context *ctx, fz_stream *stream)
 {
-	unsigned char data[8];
-	size_t n = fz_read(ctx, stream, data, 8);
+	unsigned char data[16];
+	size_t n = fz_read(ctx, stream, data, 16);
 	int fmt;
 
-	if (n != 8)
+	if (n != 16)
 		return 0;
 
 	fmt = fz_recognize_image_format(ctx, data);
@@ -280,6 +280,7 @@ static const char *img_extensions[] =
 	"tif",
 	"tiff",
 	"wdp",
+	"webp",
 	NULL
 };
 
@@ -296,6 +297,7 @@ static const char *img_mimetypes[] =
 	"image/tiff",
 	"image/vnd.ms-photo",
 	"image/vnd.adobe.photoshop",
+	"image/webp",
 	"image/x-jb2",
 	"image/x-jbig2",
 	"image/x-portable-anymap",

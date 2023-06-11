@@ -135,6 +135,7 @@ SYS_JBIG2DEC_LIBS := -ljbig2dec
 SYS_JPEGXR_LIBS := -ljpegxr
 SYS_LCMS2_LIBS := -llcms2
 SYS_LIBJPEG_LIBS := -ljpeg
+SYS_LIBWEBP_LIBS := -lwebp -lwebpdemux
 SYS_MUJS_LIBS := -lmujs
 SYS_OPENJPEG_LIBS := -lopenjp2
 SYS_ZLIB_LIBS := -lz
@@ -190,6 +191,10 @@ else ifeq ($(OS),Linux)
   ifeq ($(shell pkg-config --exists libjpeg && echo yes),yes)
 	SYS_LIBJPEG_CFLAGS := $(shell pkg-config --cflags libjpeg)
 	SYS_LIBJPEG_LIBS := $(shell pkg-config --libs libjpeg)
+  endif
+  ifeq ($(shell pkg-config --exists libwebp && echo yes),yes)
+	SYS_LIBWEBP_CFLAGS := $(shell pkg-config --cflags libwebp,libwebpdemux)
+	SYS_LIBWEBP_LIBS := $(shell pkg-config --libs libwebp,libwebpdemux)
   endif
   ifeq ($(shell pkg-config --exists libopenjp2 && echo yes),yes)
 	SYS_OPENJPEG_CFLAGS := $(shell pkg-config --cflags libopenjp2)
