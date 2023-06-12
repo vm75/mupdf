@@ -47,3 +47,9 @@ platform/win32/Release
 platform/win32/ReleaseOpenssl
 platform/win32/Memento
 platform/win32/x64
+platform/win32/.vs
+platform/c++
+__pycache__
+platform/python/*_swig.*
+platform/python/include
+platform/wasm/libmupdf.*

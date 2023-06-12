@@ -56,6 +56,7 @@ LOCAL_C_INCLUDES += $(patsubst -I%,$(MUPDF_PATH)/%,$(filter -I%,$(HARFBUZZ_CFLAG
 LOCAL_C_INCLUDES += $(patsubst -I%,$(MUPDF_PATH)/%,$(filter -I%,$(JBIG2DEC_CFLAGS)))
 LOCAL_C_INCLUDES += $(patsubst -I%,$(MUPDF_PATH)/%,$(filter -I%,$(LCMS2_CFLAGS)))
 LOCAL_C_INCLUDES += $(patsubst -I%,$(MUPDF_PATH)/%,$(filter -I%,$(LIBJPEG_CFLAGS)))
+LOCAL_C_INCLUDES += $(patsubst -I%,$(MUPDF_PATH)/%,$(filter -I%,$(LIBWEBP_CFLAGS)))
 LOCAL_C_INCLUDES += $(patsubst -I%,$(MUPDF_PATH)/%,$(filter -I%,$(MUJS_CFLAGS)))
 LOCAL_C_INCLUDES += $(patsubst -I%,$(MUPDF_PATH)/%,$(filter -I%,$(OPENJPEG_CFLAGS)))
 
@@ -72,6 +73,7 @@ LOCAL_CFLAGS += $(filter-out -I%,$(HARFBUZZ_CFLAGS))
 LOCAL_CFLAGS += $(filter-out -I%,$(JBIG2DEC_CFLAGS))
 LOCAL_CFLAGS += $(filter-out -I%,$(LCMS2_CFLAGS))
 LOCAL_CFLAGS += $(filter-out -I%,$(LIBJPEG_CFLAGS))
+LOCAL_CFLAGS += $(filter-out -I%,$(LIBWEBP_CFLAGS))
 LOCAL_CFLAGS += $(filter-out -I%,$(MUJS_CFLAGS))
 LOCAL_CFLAGS += $(filter-out -I%,$(OPENJPEG_CFLAGS))
 
@@ -146,6 +148,14 @@ LOCAL_MODULE += mupdf_thirdparty_libjpeg
 LOCAL_SRC_FILES += $(patsubst %,$(MUPDF_PATH)/%,$(LIBJPEG_SRC))
 LOCAL_C_INCLUDES += $(patsubst -I%,$(MUPDF_PATH)/%,$(filter -I%,$(LIBJPEG_CFLAGS) $(LIBJPEG_BUILD_CFLAGS)))
 LOCAL_CFLAGS += $(filter-out -I%,$(LIBJPEG_CFLAGS) $(LIBJPEG_BUILD_CFLAGS))
+LOCAL_CFLAGS += $(MUPDF_EXTRA_CFLAGS)
+include $(BUILD_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE += mupdf_thirdparty_libwebp
+LOCAL_SRC_FILES += $(patsubst %,$(MUPDF_PATH)/%,$(LIBWEBP_SRC))
+LOCAL_C_INCLUDES += $(patsubst -I%,$(MUPDF_PATH)/%,$(filter -I%,$(LIBWEBP_CFLAGS) $(LIBWEBP_BUILD_CFLAGS)))
+LOCAL_CFLAGS += $(filter-out -I%,$(LIBWEBP_CFLAGS) $(LIBWEBP_BUILD_CFLAGS))
 LOCAL_CFLAGS += $(MUPDF_EXTRA_CFLAGS)
 include $(BUILD_STATIC_LIBRARY)
 
@@ -225,6 +235,7 @@ LOCAL_STATIC_LIBRARIES += mupdf_thirdparty_harfbuzz
 LOCAL_STATIC_LIBRARIES += mupdf_thirdparty_jbig2dec
 LOCAL_STATIC_LIBRARIES += mupdf_thirdparty_lcms2
 LOCAL_STATIC_LIBRARIES += mupdf_thirdparty_libjpeg
+LOCAL_STATIC_LIBRARIES += mupdf_thirdparty_libwebp
 LOCAL_STATIC_LIBRARIES += mupdf_thirdparty_mujs
 LOCAL_STATIC_LIBRARIES += mupdf_thirdparty_openjpeg
 

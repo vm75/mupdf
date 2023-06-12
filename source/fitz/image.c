@@ -760,6 +760,9 @@ compressed_image_get_pixmap(fz_context *ctx, fz_image *image_, fz_irect *subarea
 	case FZ_IMAGE_PSD:
 		tile = fz_load_psd(ctx, image->buffer->buffer->data, image->buffer->buffer->len);
 		break;
+	case FZ_IMAGE_WEBP:
+		tile = fz_load_webp(ctx, image->buffer->buffer->data, image->buffer->buffer->len);
+		break;
 	case FZ_IMAGE_JPEG:
 		/* Scan JPEG stream and patch missing height values in header */
 		{
@@ -1219,6 +1222,7 @@ fz_image_type_name(int type)
 	case FZ_IMAGE_PNG: return "png";
 	case FZ_IMAGE_PNM: return "pnm";
 	case FZ_IMAGE_TIFF: return "tiff";
+	case FZ_IMAGE_WEBP: return "webp";
 	}
 }
 
@@ -1240,11 +1244,12 @@ fz_lookup_image_type(const char *type)
 	if (!strcmp(type, "png")) return FZ_IMAGE_PNG;
 	if (!strcmp(type, "pnm")) return FZ_IMAGE_PNM;
 	if (!strcmp(type, "tiff")) return FZ_IMAGE_TIFF;
+	if (!strcmp(type, "webp")) return FZ_IMAGE_WEBP;
 	return FZ_IMAGE_UNKNOWN;
 }
 
 int
-fz_recognize_image_format(fz_context *ctx, unsigned char p[8])
+fz_recognize_image_format(fz_context *ctx, unsigned char p[16])
 {
 	if (p[0] == 'P' && p[1] >= '1' && p[1] <= '7')
 		return FZ_IMAGE_PNM;
@@ -1277,6 +1282,11 @@ fz_recognize_image_format(fz_context *ctx, unsigned char p[8])
 		return FZ_IMAGE_JBIG2;
 	if (p[0] == '8' && p[1] == 'B' && p[2] == 'P' && p[3] == 'S')
 		return FZ_IMAGE_PSD;
+	if (!memcmp(p, "RIFF", 4) && !memcmp(p+8, "WEBP", 4))
+	{
+		if (!memcmp(p+12, "VP8 ", 4) || !memcmp(p+12, "VP8L", 4) || !memcmp(p+12, "VP8X", 4))
+			return FZ_IMAGE_WEBP;
+	}
 	return FZ_IMAGE_UNKNOWN;
 }
 
@@ -1293,7 +1303,7 @@ fz_new_image_from_buffer(fz_context *ctx, fz_buffer *buffer)
 	int bpc;
 	uint8_t orientation = 0;
 
-	if (len < 8)
+	if (len < 16)
 		fz_throw(ctx, FZ_ERROR_GENERIC, "unknown image file format");
 
 	type = fz_recognize_image_format(ctx, buf);
@@ -1330,6 +1340,9 @@ fz_new_image_from_buffer(fz_context *ctx, fz_buffer *buffer)
 	case FZ_IMAGE_JBIG2:
 		fz_load_jbig2_info(ctx, buf, len, &w, &h, &xres, &yres, &cspace);
 		bpc = 1;
+		break;
+	case FZ_IMAGE_WEBP:
+		fz_load_webp_info(ctx, buf, len, &w, &h, &xres, &yres, &cspace);
 		break;
 	default:
 		fz_throw(ctx, FZ_ERROR_GENERIC, "unknown image file format");
