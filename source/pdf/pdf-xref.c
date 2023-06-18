@@ -2521,7 +2521,9 @@ perform_repair:
 				 * repair, it may not be. It is safe to call pdf_get_xref_entry_no_change
 				 * here, as it does not try/catch. */
 				ox = pdf_get_xref_entry_no_change(ctx, doc, num);
-				ox->type = 'o'; /* Not recursing any more. */
+				/* Bug 706762: ox can be NULL if the object went away during a repair. */
+				if (ox && ox->type == 'O')
+					ox->type = 'o'; /* Not recursing any more. */
 			}
 			fz_catch(ctx)
 				fz_rethrow(ctx);
@@ -2530,7 +2532,8 @@ perform_repair:
 			if (!x->obj)
 			{
 				x->type = 'f';
-				ox->type = 'f';
+				if (ox)
+					ox->type = 'f';
 				if (doc->repair_attempted)
 					fz_throw(ctx, FZ_ERROR_GENERIC, "object (%d 0 R) was not found in its object stream", num);
 				goto perform_repair;
@@ -5113,4 +5116,36 @@ int pdf_obj_is_incremental(fz_context *ctx, pdf_obj *obj)
 	v = pdf_find_incremental_update_num_for_obj(ctx, doc, obj);
 
 	return (v == 0);
+}
+
+void pdf_minimize_document(fz_context *ctx, pdf_document *doc)
+{
+	int i;
+
+	/* Don't throw anything away if we've done a repair! */
+	if (doc == NULL || doc->repair_attempted)
+		return;
+
+	/* Don't throw anything away in the incremental section, as that's where
+	 * all our changes will be. */
+	for (i = doc->num_incremental_sections; i < doc->num_xref_sections; i++)
+	{
+		pdf_xref *xref = &doc->xref_sections[i];
+		pdf_xref_subsec *sub;
+
+		for (sub = xref->subsec; sub; sub = sub->next)
+		{
+			int len = sub->len;
+			int j;
+			for (j = 0; j < len; j++)
+			{
+				pdf_xref_entry *e = &sub->table[j];
+				if (e->obj == NULL)
+					continue;
+				if (e->type != 'o')
+					continue;
+				e->obj = pdf_drop_singleton_obj(ctx, e->obj);
+			}
+		}
+	}
 }

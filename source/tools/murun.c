@@ -1785,7 +1785,7 @@ js_dev_set_default_colorspaces(fz_context *ctx, fz_device *dev, fz_default_color
 		rethrow_as_fz(J);
 	if (js_hasproperty(J, -1, "setDefaultColorSpaces")) {
 		js_copy(J, -2);
-		ffi_pushdefaultcolorspaces(J, default_cs);
+		ffi_pushdefaultcolorspaces(J, fz_keep_default_colorspaces(ctx, default_cs));
 		js_call(J, 1);
 		js_pop(J, 1);
 	}
@@ -5376,7 +5376,7 @@ static void ffi_StructuredText_copy(js_State *J)
 static void ffi_new_DisplayListDevice(js_State *J)
 {
 	fz_context *ctx = js_getcontext(J);
-	fz_display_list *list = js_touserdata(J, 0, "fz_display_list");
+	fz_display_list *list = js_touserdata(J, 1, "fz_display_list");
 	fz_device *device = NULL;
 
 	fz_try(ctx)
@@ -7027,15 +7027,8 @@ static pdf_obj *ffi_PDFObject_get_imp(js_State *J, int inheritable)
 				rethrow(J);
 		} else if (inheritable) {
 			const char *key = js_tostring(J, i);
-			pdf_obj *name = NULL;
-			fz_var(name);
 			fz_try(ctx)
-			{
-				name = pdf_new_name(ctx, key);
-				obj = val = pdf_dict_get_inheritable(ctx, obj, name);
-			}
-			fz_always(ctx)
-				pdf_drop_obj(ctx, name);
+				obj = val = pdf_dict_gets_inheritable(ctx, obj, key);
 			fz_catch(ctx)
 				rethrow(J);
 		} else {
