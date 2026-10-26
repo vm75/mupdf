@@ -942,16 +942,28 @@ static void layout_flow(fz_context *ctx, layout_data *ld, fz_html_box *box, fz_h
 			/* NOTE: We ignore the image DPI here, since most images in EPUB files have bogus values. */
 			node->w = node->content.image->w * 72.0f / 96.0f;
 			node->h = node->content.image->h * 72.0f / 96.0f;
-			aspect = node->h ? node->w / node->h : 0;
+			if (ctx->is_image_scale)
+			{
+				/* Override publisher dimensions with the requested intrinsic scale. */
+				float scale = ctx->image_scale;
+				if (!isfinite(scale) || scale <= 0)
+					scale = 1;
+				node->w *= scale;
+				node->h *= scale;
+			}
+			else
+			{
+				aspect = node->h ? node->w / node->h : 0;
 
-			if (node->box->style->width.unit != N_AUTO)
-				node->w = fz_from_css_number(node->box->style->width, top->s.layout.em, max_w, node->w);
-			if (node->box->style->height.unit != N_AUTO)
-				node->h = fz_from_css_number(node->box->style->height, top->s.layout.em, max_h, node->h);
-			if (node->box->style->width.unit == N_AUTO && node->box->style->height.unit != N_AUTO)
-				node->w = node->h * aspect;
-			if (node->box->style->width.unit != N_AUTO && node->box->style->height.unit == N_AUTO)
-				node->h = (aspect == 0) ? 0 : (node->w / aspect);
+				if (node->box->style->width.unit != N_AUTO)
+					node->w = fz_from_css_number(node->box->style->width, top->s.layout.em, max_w, node->w);
+				if (node->box->style->height.unit != N_AUTO)
+					node->h = fz_from_css_number(node->box->style->height, top->s.layout.em, max_h, node->h);
+				if (node->box->style->width.unit == N_AUTO && node->box->style->height.unit != N_AUTO)
+					node->w = node->h * aspect;
+				if (node->box->style->width.unit != N_AUTO && node->box->style->height.unit == N_AUTO)
+					node->h = (aspect == 0) ? 0 : (node->w / aspect);
+			}
 
 			/* Shrink image to fit on one page if needed */
 			if (max_w > 0 && node->w > max_w)
@@ -4187,7 +4199,11 @@ static int draw_flow_box(fz_context *ctx, fz_html_box *box, float page_top, floa
 				if (line)
 				{
 					if (line_ss == NULL)
+					{
 						line_ss = fz_new_stroke_state(ctx);
+						if (ctx->reflow_options & FZ_REFLOW_THICK_DECORATIONS)
+							line_ss->linewidth = 3;
+					}
 				}
 
 				if (	/* If we've changed whether we're filling... */
@@ -4240,17 +4256,21 @@ static int draw_flow_box(fz_context *ctx, fz_html_box *box, float page_top, floa
 					{
 						line = fz_new_path(ctx);
 						if (line_ss == NULL)
+						{
 							line_ss = fz_new_stroke_state(ctx);
+							if (ctx->reflow_options & FZ_REFLOW_THICK_DECORATIONS)
+								line_ss->linewidth = 3;
+						}
 					}
 					if (style->text_decoration & TD_UNDERLINE)
 					{
-						fz_moveto(ctx, line, node->x, node->y + 1.5f - page_top);
-						fz_lineto(ctx, line, node->x + node->w, node->y + 1.5f - page_top);
+						fz_moveto(ctx, line, node->x, node->y + ((ctx->reflow_options & FZ_REFLOW_THICK_DECORATIONS) ? 6.0f : 1.5f) - page_top);
+						fz_lineto(ctx, line, node->x + node->w, node->y + ((ctx->reflow_options & FZ_REFLOW_THICK_DECORATIONS) ? 6.0f : 1.5f) - page_top);
 					}
 					if (style->text_decoration & TD_LINE_THROUGH)
 					{
-						fz_moveto(ctx, line, node->x, node->y - em * 0.3f - page_top);
-						fz_lineto(ctx, line, node->x + node->w, node->y - em * 0.3f - page_top);
+						fz_moveto(ctx, line, node->x, node->y - em * ((ctx->reflow_options & FZ_REFLOW_THICK_DECORATIONS) ? 0.25f : 0.3f) - page_top);
+						fz_lineto(ctx, line, node->x + node->w, node->y - em * ((ctx->reflow_options & FZ_REFLOW_THICK_DECORATIONS) ? 0.25f : 0.3f) - page_top);
 					}
 				}
 

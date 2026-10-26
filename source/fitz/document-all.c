@@ -26,6 +26,7 @@ extern fz_document_handler pdf_document_handler;
 extern fz_document_handler xps_document_handler;
 extern fz_document_handler svg_document_handler;
 extern fz_document_handler cbz_document_handler;
+extern fz_document_handler image_index_document_handler;
 extern fz_document_handler img_document_handler;
 extern fz_document_handler fb2_document_handler;
 extern fz_document_handler html_document_handler;
@@ -50,6 +51,7 @@ void fz_register_document_handlers(fz_context *ctx)
 #endif /* FZ_ENABLE_SVG */
 #if FZ_ENABLE_CBZ
 	fz_register_document_handler(ctx, &cbz_document_handler);
+	fz_register_document_handler(ctx, &image_index_document_handler);
 #endif /* FZ_ENABLE_CBZ */
 #if FZ_ENABLE_IMG
 	fz_register_document_handler(ctx, &img_document_handler);

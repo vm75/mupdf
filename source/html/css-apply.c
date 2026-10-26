@@ -1438,6 +1438,56 @@ fz_css_strtof(char *s, char **endptr)
 }
 
 static fz_css_number
+relative_number_from_value(fz_css_value *value, float initial, int unit)
+{
+	char *suffix;
+	float x;
+
+	if (!value)
+		return make_number(initial, unit);
+	if (value->type == CSS_PERCENT)
+		return make_number(fz_css_strtof(value->data, NULL), N_PERCENT);
+	if (value->type == CSS_NUMBER)
+		return make_number(fz_css_strtof(value->data, NULL), N_NUMBER);
+	if (value->type == CSS_LENGTH)
+	{
+		x = fz_css_strtof(value->data, &suffix);
+		if (!strcmp(suffix, "em")) return make_number(fz_max(x, 0.5f), N_SCALE);
+		if (!strcmp(suffix, "ex")) return make_number(x / 2, N_SCALE);
+		if (!strcmp(suffix, "in")) return make_number(x * 72, N_LENGTH);
+		if (!strcmp(suffix, "cm")) return make_number(x * 72 / 2.54f, N_LENGTH);
+		if (!strcmp(suffix, "mm")) return make_number(x * 72 / 25.4f, N_LENGTH);
+		if (!strcmp(suffix, "pc")) return make_number(x * 12, N_LENGTH);
+		if (!strcmp(suffix, "pt")) return make_number(fz_max(x / 12, 1), N_SCALE);
+		if (!strcmp(suffix, "px")) return make_number(fz_max(x / 25, 1), N_SCALE);
+		if (!strcmp(suffix, "rem")) return make_number(fz_max(x, 1), N_SCALE);
+		if (!strcmp(suffix, "ch")) return make_number(x / 2, N_LENGTH);
+		return make_number(x, N_SCALE);
+	}
+	if (value->type == CSS_KEYWORD && !strcmp(value->data, "auto"))
+		return make_number(0, N_AUTO);
+	return make_number(initial, unit);
+}
+
+static fz_css_number
+relative_font_size(fz_css_value *value)
+{
+	static const char *names[] = { "xx-large", "x-large", "xxx-large", "large", "medium", "normal", "small", "x-small", "xx-small", "larger", "smaller" };
+	static const float sizes[] = { 1.7f, 1.4f, 2, 1.2f, 1, 1, 0.8f, 0.6f, 0.5f, 1.2f, 1/1.2f };
+	int i;
+	if (!value)
+		return make_number(1, N_SCALE);
+	for (i = 0; i < (int)nelem(names); ++i)
+		if (!strcmp(value->data, names[i]))
+			return make_number(sizes[i], N_SCALE);
+	if (value->type == CSS_PERCENT)
+		return make_number(fz_css_strtof(value->data, NULL) / 100, N_SCALE);
+	if (value->type == CSS_KEYWORD)
+		return make_number(1, N_SCALE);
+	return relative_number_from_value(value, 12, N_LENGTH);
+}
+
+static fz_css_number
 number_from_value(fz_css_value *value, float initial, int initial_unit)
 {
 	char *p;
@@ -1979,6 +2029,9 @@ fz_apply_css_style(fz_context *ctx, fz_html_font_set *set, fz_css_style *style, 
 		style->font_size = make_number(1, N_SCALE);
 	}
 
+	if (ctx->reflow_options & FZ_REFLOW_RELATIVE_FONT_SIZES)
+		style->font_size = relative_font_size(value);
+
 	value = value_from_property(match, PRO_LIST_STYLE_TYPE);
 	if (value)
 	{
@@ -2063,6 +2116,13 @@ fz_apply_css_style(fz_context *ctx, fz_html_font_set *set, fz_css_style *style, 
 	style->border_style_1 = border_style_from_property(match, PRO_BORDER_RIGHT_STYLE);
 	style->border_style_2 = border_style_from_property(match, PRO_BORDER_BOTTOM_STYLE);
 	style->border_style_3 = border_style_from_property(match, PRO_BORDER_LEFT_STYLE);
+	if (ctx->reflow_options & FZ_REFLOW_SOLID_BORDERS)
+	{
+		if (style->border_style_0 == BS_DOTTED) style->border_style_0 = BS_SOLID;
+		if (style->border_style_1 == BS_DOTTED) style->border_style_1 = BS_SOLID;
+		if (style->border_style_2 == BS_DOTTED) style->border_style_2 = BS_SOLID;
+		if (style->border_style_3 == BS_DOTTED) style->border_style_3 = BS_SOLID;
+	}
 
 	style->border_color[0] = color_from_property(match, PRO_BORDER_TOP_COLOR, style->color);
 	style->border_color[1] = color_from_property(match, PRO_BORDER_RIGHT_COLOR, style->color);
@@ -2094,6 +2154,13 @@ fz_apply_css_style(fz_context *ctx, fz_html_font_set *set, fz_css_style *style, 
 		}
 		if (!style->font)
 			style->font = fz_load_html_font(ctx, set, "serif", is_bold, is_italic, style->small_caps);
+	}
+	if (ctx->reflow_options & FZ_REFLOW_COMPACT_SPACING)
+	{
+		style->padding[1].value /= 2;
+		style->padding[3].value /= 2;
+		style->margin[1].value /= 2;
+		style->margin[3].value /= 2;
 	}
 }
 

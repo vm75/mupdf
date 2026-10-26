@@ -611,6 +611,31 @@ const char *fz_user_css(fz_context *ctx);
 */
 void fz_set_user_css(fz_context *ctx, const char *text);
 
+/** Optional presentation and recovery behavior for reflowable documents.
+	All flags are off by default. Set options before opening a document;
+	cloned contexts inherit the values without sharing mutable option state.
+*/
+enum
+{
+	FZ_REFLOW_RELATIVE_FONT_SIZES = 1 << 0,
+	FZ_REFLOW_COMPACT_SPACING = 1 << 1,
+	FZ_REFLOW_THICK_DECORATIONS = 1 << 2,
+	FZ_REFLOW_NO_DEFAULT_CSS = 1 << 3,
+	FZ_REFLOW_EXTENDED_IMAGE_REFERENCES = 1 << 4,
+	FZ_REFLOW_IGNORE_INVALID_NAVIGATION = 1 << 5,
+	FZ_REFLOW_SOLID_BORDERS = 1 << 6,
+	FZ_REFLOW_HIDE_MISSING_IMAGES = 1 << 7
+};
+
+void fz_set_reflow_options(fz_context *ctx, unsigned int options);
+unsigned int fz_reflow_options(fz_context *ctx);
+
+/** Override intrinsic image dimensions by a scale factor before fitting to
+	the page, ignoring publisher width/height. An enabled scale must be finite
+	and positive. Disabling restores publisher sizing. Set before opening.
+*/
+void fz_set_reflow_image_scale(fz_context *ctx, int enabled, float scale);
+
 /**
 	Set the user stylesheet by loading the source from a file.
 	If the file is missing, do nothing.
@@ -921,6 +946,11 @@ struct fz_context
 	fz_colorspace_context *colorspace;
 	fz_store *store;
 	fz_glyph_cache *glyph_cache;
+
+	/* Per-context reflow settings, inherited by fz_clone_context. */
+	float image_scale;
+	int is_image_scale;
+	unsigned int reflow_options;
 };
 
 fz_context *fz_new_context_imp(const fz_alloc_context *alloc, const fz_locks_context *locks, size_t max_store, const char *version);

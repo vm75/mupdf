@@ -468,6 +468,13 @@ test-jxl: $(OUT)/test-jxl
 $(OUT)/test-jxl: source/tests/test-jxl.c $(MUPDF_LIB) $(THIRD_LIB)
 	$(LINK_CMD) $(CFLAGS) $(THIRD_LIBS) $(THREADING_LIBS) $(LIBCRYPTO_LIBS)
 
+.PHONY: test-document-options
+test-document-options: $(OUT)/test-document-options
+	python3 scripts/test-document-options.py $<
+
+$(OUT)/test-document-options: source/tests/test-document-options.c $(MUPDF_LIB) $(THIRD_LIB)
+	$(LINK_CMD) $(CFLAGS) $(THIRD_LIBS) $(THREADING_LIBS) $(LIBCRYPTO_LIBS)
+
 # --- Format man pages ---
 
 %.txt: %.1

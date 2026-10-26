@@ -28,6 +28,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <time.h>
+#include <math.h>
 
 
 struct fz_style_context
@@ -64,6 +65,24 @@ static void fz_drop_style_context(fz_context *ctx)
 		fz_free(ctx, ctx->style->user_css);
 		fz_free(ctx, ctx->style);
 	}
+}
+
+void fz_set_reflow_options(fz_context *ctx, unsigned int options)
+{
+	ctx->reflow_options = options;
+}
+
+unsigned int fz_reflow_options(fz_context *ctx)
+{
+	return ctx->reflow_options;
+}
+
+void fz_set_reflow_image_scale(fz_context *ctx, int enabled, float scale)
+{
+	if (enabled && (!isfinite(scale) || scale <= 0))
+		fz_throw(ctx, FZ_ERROR_ARGUMENT, "image scale must be finite and positive");
+	ctx->is_image_scale = !!enabled;
+	ctx->image_scale = enabled ? scale : 1;
 }
 
 void fz_set_use_document_css(fz_context *ctx, int use)
@@ -260,6 +279,7 @@ fz_new_context_imp(const fz_alloc_context *alloc, const fz_locks_context *locks,
 		return NULL;
 	}
 	memset(ctx, 0, sizeof *ctx);
+	ctx->image_scale = 1;
 
 	ctx->user = NULL;
 	ctx->alloc = *alloc;

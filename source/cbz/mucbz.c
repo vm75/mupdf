@@ -24,6 +24,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <limits.h>
 
 #define DPI 72.0f
 
@@ -66,6 +67,7 @@ typedef struct
 	fz_archive *arch;
 	int page_count;
 	const char **page;
+	fz_xml_doc *index_xml;
 } cbz_document;
 
 static inline int cbz_isdigit(int c)
@@ -131,6 +133,8 @@ cbz_create_page_list(fz_context *ctx, cbz_document *doc)
 	{
 		const char *name = fz_list_archive_entry(ctx, arch, i);
 		const char *ext = name ? strrchr(name, '.') : NULL;
+		if (!name || name[0] == '.' || strstr(name, "/.") || !strncmp(name, "__MACOSX/", 9))
+			continue;
 		for (k = 0; cbz_ext_list[k]; k++)
 		{
 			if (ext && !fz_strcasecmp(ext, cbz_ext_list[k]))
@@ -149,6 +153,7 @@ cbz_drop_document(fz_context *ctx, fz_document *doc_)
 {
 	cbz_document *doc = (cbz_document*)doc_;
 	fz_drop_archive(ctx, doc->arch);
+	fz_drop_xml(ctx, doc->index_xml);
 	fz_free(ctx, (char **)doc->page);
 }
 
@@ -239,12 +244,14 @@ cbz_load_page(fz_context *ctx, fz_document *doc_, int chapter, int number)
 	cbz_document *doc = (cbz_document*)doc_;
 	cbz_page *page = NULL;
 	fz_buffer *buf = NULL;
+	char *filename = NULL;
 
 	if (number < 0 || number >= doc->page_count)
 		fz_throw(ctx, FZ_ERROR_ARGUMENT, "invalid page number %d", number);
 
 	fz_var(page);
 	fz_var(buf);
+	fz_var(filename);
 
 	page = fz_new_derived_page(ctx, cbz_page, doc_);
 	page->super.bound_page = cbz_bound_page;
@@ -253,12 +260,26 @@ cbz_load_page(fz_context *ctx, fz_document *doc_, int chapter, int number)
 
 	fz_try(ctx)
 	{
-		buf = fz_read_archive_entry(ctx, doc->arch, doc->page[number]);
+		const char *path = doc->page[number];
+		if (doc->index_xml && !strncmp(path, "file://", 7))
+		{
+			filename = fz_strdup(ctx, path + 7);
+			path = fz_urldecode(filename);
+		}
+		/* Only explicit folder indexes may refer to filesystem paths. A missing
+		 * entry in an ordinary comic must never fall back to the filesystem. */
+		if (doc->index_xml && (path[0] == '/' || path[0] == '\\' || (path[0] && path[1] == ':')))
+			buf = fz_read_file(ctx, path);
+		else if (doc->arch)
+			buf = fz_read_archive_entry(ctx, doc->arch, path);
+		else
+			fz_throw(ctx, FZ_ERROR_ARGUMENT, "relative image-index image requires a containing directory");
 		page->image = fz_new_image_from_buffer(ctx, buf);
 	}
 	fz_always(ctx)
 	{
 		fz_drop_buffer(ctx, buf);
+		fz_free(ctx, filename);
 	}
 	fz_catch(ctx)
 	{
@@ -274,7 +295,7 @@ cbz_lookup_metadata(fz_context *ctx, fz_document *doc_, const char *key, char *b
 {
 	cbz_document *doc = (cbz_document*)doc_;
 	if (!strcmp(key, FZ_META_FORMAT))
-		return 1 + (int) fz_strlcpy(buf, fz_archive_format(ctx, doc->arch), size);
+		return 1 + (int) fz_strlcpy(buf, doc->index_xml ? "image-index" : fz_archive_format(ctx, doc->arch), size);
 	return -1;
 }
 
@@ -303,6 +324,68 @@ cbz_open_document(fz_context *ctx, const fz_document_handler *handler, fz_stream
 	}
 	return (fz_document*)doc;
 }
+
+/* An XML image index. Keep XML ownership for the page path strings;
+ * use the actual item count rather than trusting the caller's count attribute. */
+static fz_document *
+image_index_open_document(fz_context *ctx, const fz_document_handler *handler, fz_stream *file, fz_stream *accel, fz_archive *dir, void *state)
+{
+	cbz_document *doc = fz_new_derived_document(ctx, cbz_document);
+	fz_buffer *buf = NULL;
+	fz_xml *container, *item;
+	int count = 0;
+
+	fz_var(buf);
+	doc->super.drop_document = cbz_drop_document;
+	doc->super.count_pages = cbz_count_pages;
+	doc->super.load_page = cbz_load_page;
+	doc->super.lookup_metadata = cbz_lookup_metadata;
+
+	fz_try(ctx)
+	{
+		if (!file)
+			fz_throw(ctx, FZ_ERROR_ARGUMENT, "image index requires an XML index stream");
+		buf = fz_read_all(ctx, file, 0);
+		doc->index_xml = fz_parse_xml(ctx, buf, 0);
+		container = fz_xml_root(doc->index_xml);
+		if (!container || !fz_xml_is_tag(container, "container"))
+			fz_throw(ctx, FZ_ERROR_FORMAT, "cannot find container in image index");
+		for (item = fz_xml_find_down(container, "item"); item; item = fz_xml_find_next(item, "item"))
+		{
+			const char *path = fz_xml_att(item, "path");
+			if (!path || !*path)
+				fz_throw(ctx, FZ_ERROR_FORMAT, "image-index item has no image path");
+			if (count == INT_MAX)
+				fz_throw(ctx, FZ_ERROR_LIMIT, "too many image-index pages");
+			++count;
+		}
+		doc->arch = fz_keep_archive(ctx, dir);
+		doc->page = fz_malloc_array(ctx, count, const char *);
+		for (item = fz_xml_find_down(container, "item"); item; item = fz_xml_find_next(item, "item"))
+			doc->page[doc->page_count++] = fz_xml_att(item, "path");
+	}
+	fz_always(ctx)
+		fz_drop_buffer(ctx, buf);
+	fz_catch(ctx)
+	{
+		fz_drop_document(ctx, (fz_document*)doc);
+		fz_rethrow(ctx);
+	}
+	return (fz_document*)doc;
+}
+
+static const char *image_index_extensions[] = { "imagedir", "ldir", NULL };
+static const char *image_index_mimetypes[] = { "application/x-image-index+xml", "application/lxml", NULL };
+
+fz_document_handler image_index_document_handler =
+{
+	NULL,
+	image_index_open_document,
+	image_index_extensions,
+	image_index_mimetypes,
+	NULL,
+	1 /* wants_dir: relative images resolve against the index's directory */
+};
 
 static const char *cbz_extensions[] =
 {

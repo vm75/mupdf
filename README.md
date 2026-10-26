@@ -6,6 +6,10 @@ are maintained in **vm75/mupdf** as a small sequence of commits on `main`, rebas
 onto upstream. Upstream acceptance of the codec changes is not a prerequisite
 for maintaining this fork.
 
+Generic [image-index documents and per-context reflow options](docs/guide/document-options.md)
+are also available to embedding applications; optional presentation behavior is
+disabled by default.
+
 For general MuPDF usage, see the original [upstream README](README) and
 [MuPDF documentation](https://mupdf.readthedocs.io/).
 
@@ -60,11 +64,12 @@ compiler defines in `XCFLAGS` or settings in `config.h`; disabled codecs do not
 require their headers or libraries in Make builds. Make uses separate `-no-webp`
 and `-no-jxl` output directories for disabled configurations.
 
-WebP has Make, Android, and Visual Studio build integration. Other build systems
-must supply libjxl headers and link libraries for the default JPEG XL enabled
-configuration, or define `FZ_ENABLE_JXL=0`. Linux builds and codec regression
-tests have been exercised; native Windows and Android builds have not been
-validated here.
+WebP has Make, Android, and Visual Studio build integration. For Android JPEG XL,
+use the [Android codec SDK helper and NDK integration](docs/guide/android-codecs.md).
+Other build systems must supply libjxl headers and link libraries for the default
+JPEG XL enabled configuration, or define `FZ_ENABLE_JXL=0`. Linux codec and
+document-option tests are available; native Windows builds and Android device
+execution have not been validated here.
 
 ## Keep the fork on top of upstream
 
@@ -153,10 +158,10 @@ The helper uses separate build directories for all four codec configurations.
 The equivalent manual checks are:
 
 ```sh
-make build=debug test-webp test-jxl
-make build=debug FZ_ENABLE_WEBP=0 test-webp test-jxl
-make build=debug FZ_ENABLE_JXL=0 test-webp test-jxl
-make build=debug FZ_ENABLE_WEBP=0 FZ_ENABLE_JXL=0 test-webp test-jxl
+make build=debug test-webp test-jxl test-document-options
+make build=debug FZ_ENABLE_WEBP=0 test-webp test-jxl test-document-options
+make build=debug FZ_ENABLE_JXL=0 test-webp test-jxl test-document-options
+make build=debug FZ_ENABLE_WEBP=0 FZ_ENABLE_JXL=0 test-webp test-jxl test-document-options
 ```
 
 The default checks both decoders, including pixel output, metadata, malformed

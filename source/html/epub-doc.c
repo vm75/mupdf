@@ -781,7 +781,15 @@ epub_parse_ncx(fz_context *ctx, epub_document *doc, const char *path)
 		fz_drop_xml(ctx, ncx);
 	}
 	fz_catch(ctx)
-		fz_rethrow(ctx);
+	{
+		if (!(ctx->reflow_options & FZ_REFLOW_IGNORE_INVALID_NAVIGATION))
+			fz_rethrow(ctx);
+		fz_rethrow_if(ctx, FZ_ERROR_SYSTEM);
+		fz_rethrow_if(ctx, FZ_ERROR_TRYLATER);
+		fz_rethrow_if(ctx, FZ_ERROR_LIMIT);
+		fz_report_error(ctx);
+		fz_warn(ctx, "ignoring invalid EPUB navigation");
+	}
 }
 
 static fz_outline *
@@ -884,7 +892,15 @@ epub_parse_nav(fz_context *ctx, epub_document *doc, const char *path)
 		fz_drop_xml(ctx, nav_doc);
 	}
 	fz_catch(ctx)
-		fz_rethrow(ctx);
+	{
+		if (!(ctx->reflow_options & FZ_REFLOW_IGNORE_INVALID_NAVIGATION))
+			fz_rethrow(ctx);
+		fz_rethrow_if(ctx, FZ_ERROR_SYSTEM);
+		fz_rethrow_if(ctx, FZ_ERROR_TRYLATER);
+		fz_rethrow_if(ctx, FZ_ERROR_LIMIT);
+		fz_report_error(ctx);
+		fz_warn(ctx, "ignoring invalid EPUB navigation");
+	}
 }
 
 static int my_isspace(char c)

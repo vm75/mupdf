@@ -31,8 +31,11 @@ Disable either codec with `FZ_ENABLE_WEBP=0` or `FZ_ENABLE_JXL=0`; Make accepts
 these variables and reads the same switches from compiler flags or `config.h`.
 Disabled codecs do not require their dependencies in Make builds.
 Custom installations can set `SYS_LIBJXL_CFLAGS` and `SYS_LIBJXL_LIBS`.
-Other build systems must supply the same headers and libraries for the default
-configuration, or disable JPEG XL with `FZ_ENABLE_JXL=0`. JPEG XL supports `.jxl`
+Android builds can use the [decoder SDK helper](../guide/android-codecs.md),
+which bundles the libjxl decoder, skcms color management, Highway and Brotli
+into a static archive per ABI and preserves their license notices. Other build
+systems must supply the same headers and libraries for the default configuration,
+or disable JPEG XL with `FZ_ENABLE_JXL=0`. JPEG XL supports `.jxl`
 image and CBZ input, displaying the first coalesced frame as 8-bit grayscale or
 RGB, with alpha and ICC color profiles.
 

@@ -124,7 +124,7 @@ class RebaseForkTests(unittest.TestCase):
         for call, (webp, jxl) in zip(calls, [(1, 1), (0, 1), (1, 0), (0, 0)]):
             self.assertIn("FZ_ENABLE_WEBP=" + str(webp), call)
             self.assertIn("FZ_ENABLE_JXL=" + str(jxl), call)
-            self.assertEqual(call[-2:], ["test-webp", "test-jxl"])
+            self.assertEqual(call[-3:], ["test-webp", "test-jxl", "test-document-options"])
         outputs = [arg for call in calls for arg in call if arg.startswith("OUT=")]
         self.assertEqual(len(set(outputs)), 4)
 

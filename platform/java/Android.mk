@@ -33,6 +33,31 @@ HAVE_FMA := yes
 HAVE_SSE4_1 := yes
 endif
 
+# Resolve the same feature defines used by the compiler, including config.h overrides.
+# Do not query the host's pkg-config when cross-compiling.
+ifneq ($(origin FZ_ENABLE_WEBP),undefined)
+MUPDF_EXTRA_CFLAGS += -DFZ_ENABLE_WEBP=$(FZ_ENABLE_WEBP)
+endif
+ifneq ($(origin FZ_ENABLE_JXL),undefined)
+MUPDF_EXTRA_CFLAGS += -DFZ_ENABLE_JXL=$(FZ_ENABLE_JXL)
+endif
+MUPDF_CODEC_CONFIG := $(shell printf '%s\n' '#include "mupdf/fitz/config.h"' '#if FZ_ENABLE_WEBP' 'WEBP_ENABLED' '#endif' '#if FZ_ENABLE_JXL' 'JXL_ENABLED' '#endif' | $(TARGET_CC) $(APP_CFLAGS) $(MUPDF_EXTRA_CFLAGS) -I$(MUPDF_PATH)/include -E -P -x c - 2>/dev/null || echo CODEC_CONFIG_ERROR)
+ifneq ($(filter CODEC_CONFIG_ERROR,$(MUPDF_CODEC_CONFIG)),)
+$(error Cannot read Android codec configuration with TARGET_CC=$(TARGET_CC))
+endif
+MUPDF_ANDROID_WEBP := $(filter WEBP_ENABLED,$(MUPDF_CODEC_CONFIG))
+MUPDF_ANDROID_JXL := $(filter JXL_ENABLED,$(MUPDF_CODEC_CONFIG))
+ifneq ($(MUPDF_ANDROID_JXL),)
+MUPDF_JXL_ROOT ?= $(MUPDF_PATH)/build/android-jxl
+MUPDF_JXL_SDK := $(abspath $(MUPDF_JXL_ROOT))/$(TARGET_ARCH_ABI)
+ifeq ($(wildcard $(MUPDF_JXL_SDK)/include/jxl/decode.h),)
+$(error JPEG XL requires an Android SDK for $(TARGET_ARCH_ABI); run scripts/build-android-jxl.py or set FZ_ENABLE_JXL=0)
+endif
+ifeq ($(wildcard $(MUPDF_JXL_SDK)/lib/libmupdf-jxl.a),)
+$(error Missing $(MUPDF_JXL_SDK)/lib/libmupdf-jxl.a; run scripts/build-android-jxl.py)
+endif
+endif
+
 include $(MUPDF_PATH)/Makelists
 
 ifeq ($(USE_TESSERACT),yes)
@@ -63,7 +88,13 @@ LOCAL_C_INCLUDES += $(patsubst -I%,$(MUPDF_PATH)/%,$(filter -I%,$(HARFBUZZ_CFLAG
 LOCAL_C_INCLUDES += $(patsubst -I%,$(MUPDF_PATH)/%,$(filter -I%,$(JBIG2DEC_CFLAGS)))
 LOCAL_C_INCLUDES += $(patsubst -I%,$(MUPDF_PATH)/%,$(filter -I%,$(LCMS2_CFLAGS)))
 LOCAL_C_INCLUDES += $(patsubst -I%,$(MUPDF_PATH)/%,$(filter -I%,$(LIBJPEG_CFLAGS)))
+ifneq ($(MUPDF_ANDROID_WEBP),)
 LOCAL_C_INCLUDES += $(patsubst -I%,$(MUPDF_PATH)/%,$(filter -I%,$(LIBWEBP_CFLAGS)))
+endif
+ifneq ($(MUPDF_ANDROID_JXL),)
+LOCAL_C_INCLUDES += $(MUPDF_JXL_SDK)/include
+LOCAL_CFLAGS += -DJXL_STATIC_DEFINE -DJXL_CMS_STATIC_DEFINE
+endif
 LOCAL_C_INCLUDES += $(patsubst -I%,$(MUPDF_PATH)/%,$(filter -I%,$(MUJS_CFLAGS)))
 LOCAL_C_INCLUDES += $(patsubst -I%,$(MUPDF_PATH)/%,$(filter -I%,$(OPENJPEG_CFLAGS)))
 LOCAL_C_INCLUDES += $(patsubst -I%,$(MUPDF_PATH)/%,$(filter -I%,$(BROTLI_CFLAGS)))
@@ -84,7 +115,9 @@ LOCAL_CFLAGS += $(filter-out -I%,$(HARFBUZZ_CFLAGS))
 LOCAL_CFLAGS += $(filter-out -I%,$(JBIG2DEC_CFLAGS))
 LOCAL_CFLAGS += $(filter-out -I%,$(LCMS2_CFLAGS))
 LOCAL_CFLAGS += $(filter-out -I%,$(LIBJPEG_CFLAGS))
+ifneq ($(MUPDF_ANDROID_WEBP),)
 LOCAL_CFLAGS += $(filter-out -I%,$(LIBWEBP_CFLAGS))
+endif
 LOCAL_CFLAGS += $(filter-out -I%,$(MUJS_CFLAGS))
 LOCAL_CFLAGS += $(filter-out -I%,$(OPENJPEG_CFLAGS))
 LOCAL_CFLAGS += $(filter-out -I%,$(BROTLI_CFLAGS))
@@ -168,6 +201,7 @@ LOCAL_CFLAGS += $(filter-out -I%,$(LIBJPEG_CFLAGS) $(LIBJPEG_BUILD_CFLAGS))
 LOCAL_CFLAGS += $(MUPDF_EXTRA_CFLAGS)
 include $(BUILD_STATIC_LIBRARY)
 
+ifneq ($(MUPDF_ANDROID_WEBP),)
 include $(CLEAR_VARS)
 LOCAL_MODULE += mupdf_thirdparty_libwebp
 LOCAL_SRC_FILES += $(patsubst %,$(MUPDF_PATH)/%,$(LIBWEBP_SRC))
@@ -175,6 +209,18 @@ LOCAL_C_INCLUDES += $(patsubst -I%,$(MUPDF_PATH)/%,$(filter -I%,$(LIBWEBP_CFLAGS
 LOCAL_CFLAGS += $(filter-out -I%,$(LIBWEBP_CFLAGS) $(LIBWEBP_BUILD_CFLAGS))
 LOCAL_CFLAGS += $(MUPDF_EXTRA_CFLAGS)
 include $(BUILD_STATIC_LIBRARY)
+
+endif
+
+ifneq ($(MUPDF_ANDROID_JXL),)
+include $(CLEAR_VARS)
+LOCAL_MODULE := mupdf_thirdparty_libjxl
+LOCAL_SRC_FILES := $(MUPDF_JXL_SDK)/lib/libmupdf-jxl.a
+LOCAL_EXPORT_C_INCLUDES := $(MUPDF_JXL_SDK)/include
+LOCAL_EXPORT_CFLAGS := -DJXL_STATIC_DEFINE -DJXL_CMS_STATIC_DEFINE
+LOCAL_EXPORT_LDLIBS := -latomic
+include $(PREBUILT_STATIC_LIBRARY)
+endif
 
 include $(CLEAR_VARS)
 LOCAL_MODULE += mupdf_thirdparty_mujs
@@ -275,7 +321,12 @@ LOCAL_STATIC_LIBRARIES += mupdf_thirdparty_harfbuzz
 LOCAL_STATIC_LIBRARIES += mupdf_thirdparty_jbig2dec
 LOCAL_STATIC_LIBRARIES += mupdf_thirdparty_lcms2
 LOCAL_STATIC_LIBRARIES += mupdf_thirdparty_libjpeg
+ifneq ($(MUPDF_ANDROID_WEBP),)
 LOCAL_STATIC_LIBRARIES += mupdf_thirdparty_libwebp
+endif
+ifneq ($(MUPDF_ANDROID_JXL),)
+LOCAL_STATIC_LIBRARIES += mupdf_thirdparty_libjxl
+endif
 LOCAL_STATIC_LIBRARIES += mupdf_thirdparty_mujs
 LOCAL_STATIC_LIBRARIES += mupdf_thirdparty_openjpeg
 LOCAL_STATIC_LIBRARIES += mupdf_thirdparty_brotli
@@ -299,4 +350,12 @@ LOCAL_LDLIBS += -lm
 LOCAL_LDFLAGS := -Wl,--gc-sections
 LOCAL_LDFLAGS += $(MUPDF_EXTRA_LDFLAGS)
 
+# Embedders can link this module into their own JNI library while reusing
+# MuPDF's third-party dependency modules.
+ifeq ($(MUPDF_JNI_STATIC),yes)
+LOCAL_EXPORT_LDLIBS += $(LOCAL_LDLIBS)
+LOCAL_EXPORT_LDFLAGS += $(LOCAL_LDFLAGS)
+include $(BUILD_STATIC_LIBRARY)
+else
 include $(BUILD_SHARED_LIBRARY)
+endif

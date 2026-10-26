@@ -106,7 +106,7 @@ def finish(state, path, skip_tests):
             run("make", "build=debug", "FZ_ENABLE_WEBP=" + str(webp),
                 "FZ_ENABLE_JXL=" + str(jxl),
                 "OUT=" + prefix + "-webp" + str(webp) + "-jxl" + str(jxl),
-                "test-webp", "test-jxl")
+                "test-webp", "test-jxl", "test-document-options")
     else:
         print("Tests skipped. Run all codec configurations before publishing.")
     clean()

@@ -748,8 +748,11 @@ static void generate_image(fz_context *ctx, fz_html_box *box, fz_image *img, str
 
 	if (!img)
 	{
-		const char *alt = "[image]";
-		add_flow_word(ctx, pool, flow, box, alt, alt + 7, 0);
+		if (!(ctx->reflow_options & FZ_REFLOW_HIDE_MISSING_IMAGES))
+		{
+			const char *alt = "[image]";
+			add_flow_word(ctx, pool, flow, box, alt, alt + 7, 0);
+		}
 	}
 	else
 	{
@@ -757,7 +760,8 @@ static void generate_image(fz_context *ctx, fz_html_box *box, fz_image *img, str
 		{
 			add_flow_sbreak(ctx, pool, flow, box);
 			add_flow_image(ctx, pool, flow, box, img);
-			add_flow_sbreak(ctx, pool, flow, box);
+			if (!(ctx->reflow_options & FZ_REFLOW_COMPACT_SPACING))
+				add_flow_sbreak(ctx, pool, flow, box);
 		}
 		fz_always(ctx)
 		{
@@ -1319,6 +1323,13 @@ static void gen2_image_common(fz_context *ctx, struct genstate *g, fz_html_box *
 		local_style.height.unit = strchr(h_att, '%') ? N_PERCENT : N_LENGTH;
 	}
 
+	if (ctx->is_image_scale)
+	{
+		/* Ignore dimensions on this image without changing surrounding boxes. */
+		local_style.width.value = local_style.height.value = 0;
+		local_style.width.unit = local_style.height.unit = N_AUTO;
+	}
+
 	if (display == DIS_INLINE || display == DIS_INLINE_BLOCK)
 	{
 		root_box = find_inline_context(ctx, g, root_box);
@@ -1342,6 +1353,15 @@ static void gen2_image_common(fz_context *ctx, struct genstate *g, fz_html_box *
 static void gen2_image_html(fz_context *ctx, struct genstate *g, fz_html_box *root_box, fz_xml *node, int display, fz_css_style *style)
 {
 	const char *src = fz_xml_att(node, "src");
+	if (display == DIS_NONE)
+		return;
+	if (ctx->reflow_options & FZ_REFLOW_EXTENDED_IMAGE_REFERENCES)
+	{
+		if (!src)
+			src = fz_xml_att(node, "href");
+		if (!src)
+			src = fz_xml_att(node, "l:href");
+	}
 	if (src)
 	{
 		fz_image *img = load_html_image(ctx, g->zip, g->base_uri, src);
@@ -1358,6 +1378,11 @@ static void gen2_image_fb2(fz_context *ctx, struct genstate *g, fz_html_box *roo
 	{
 		fz_image *img = fz_tree_lookup(ctx, g->images, src+1);
 		gen2_image_common(ctx, g, root_box, node, fz_keep_image(ctx, img), display, style);
+	}
+	else if ((ctx->reflow_options & FZ_REFLOW_EXTENDED_IMAGE_REFERENCES) && src && display != DIS_NONE)
+	{
+		fz_image *img = load_html_image(ctx, g->zip, g->base_uri, src);
+		gen2_image_common(ctx, g, root_box, node, img, display, style);
 	}
 }
 
@@ -1589,9 +1614,12 @@ static void gen2_children(fz_context *ctx, struct genstate *g, fz_html_box *root
 			{
 				gen2_image_html(ctx, g, root_box, node, display, &style);
 			}
-			else if (g->is_fb2 && tag[0]=='i' && tag[1]=='m' && tag[2]=='a' && tag[3]=='g' && tag[4]=='e' && tag[5]==0)
+			else if ((g->is_fb2 || (ctx->reflow_options & FZ_REFLOW_EXTENDED_IMAGE_REFERENCES)) && tag[0]=='i' && tag[1]=='m' && tag[2]=='a' && tag[3]=='g' && tag[4]=='e' && tag[5]==0)
 			{
-				gen2_image_fb2(ctx, g, root_box, node, display, &style);
+				if (g->is_fb2)
+					gen2_image_fb2(ctx, g, root_box, node, display, &style);
+				else
+					gen2_image_html(ctx, g, root_box, node, display, &style);
 			}
 			else if (tag[0]=='s' && tag[1]=='v' && tag[2]=='g' && tag[3]==0)
 			{
@@ -2148,10 +2176,11 @@ xml_to_boxes(fz_context *ctx,
 
 	fz_try(ctx)
 	{
-		if (flavor == FZ_HTML_FLAVOR_FICTIONBOOK2 && fz_xml_find(fz_xml_root(xml), "FictionBook"))
+		if ((flavor == FZ_HTML_FLAVOR_FICTIONBOOK2 || (ctx->reflow_options & FZ_REFLOW_EXTENDED_IMAGE_REFERENCES)) && fz_xml_find(fz_xml_root(xml), "FictionBook"))
 		{
 			g.is_fb2 = 1;
-			fz_parse_css(ctx, g.css, fb2_default_css, "<default:fb2>");
+			if (!(ctx->reflow_options & FZ_REFLOW_NO_DEFAULT_CSS))
+				fz_parse_css(ctx, g.css, fb2_default_css, "<default:fb2>");
 			if (publisher_css)
 				fb2_load_css(ctx, g.set, g.zip, g.base_uri, g.css, root);
 			g.images = load_fb2_images(ctx, root);
@@ -2159,9 +2188,12 @@ xml_to_boxes(fz_context *ctx,
 		else
 		{
 			g.is_fb2 = 0;
-			fz_parse_css(ctx, g.css, html_default_css, "<default:html>");
-			if (flavor == FZ_HTML_FLAVOR_MOBI)
-				fz_parse_css(ctx, g.css, mobi_default_css, "<default:mobi>");
+			if (!(ctx->reflow_options & FZ_REFLOW_NO_DEFAULT_CSS))
+			{
+				fz_parse_css(ctx, g.css, html_default_css, "<default:html>");
+				if (flavor == FZ_HTML_FLAVOR_MOBI)
+					fz_parse_css(ctx, g.css, mobi_default_css, "<default:mobi>");
+			}
 			/* Our markdown overrides count as the publisher_css for md files. */
 			if (flavor == FZ_HTML_FLAVOR_MARKDOWN && publisher_css)
 				fz_parse_css(ctx, g.css, markdown_publisher_css, "<default:markdown>");
