@@ -463,7 +463,7 @@
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;HAVE_TESSERACT;HAVE_LEPTONICA;WIN32;_DEBUG;MEMENTO=1;MEMENTO_MUPDF_HACKS=1;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>
       </MinimalRebuild>
@@ -485,7 +485,7 @@
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;TOFU_CJK_EXT=1;HAVE_TESSERACT;HAVE_LEPTONICA;WIN32;_DEBUG;MEMENTO=1;MEMENTO_MUPDF_HACKS=1;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>
       </MinimalRebuild>
@@ -510,7 +510,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;HAVE_TESSERACT;HAVE_LEPTONICA;WIN64;_DEBUG;MEMENTO=1;MEMENTO_MUPDF_HACKS=1;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>
       </MinimalRebuild>
@@ -534,7 +534,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;TOFU_CJK_EXT=1;HAVE_TESSERACT;HAVE_LEPTONICA;WIN64;_DEBUG;MEMENTO=1;MEMENTO_MUPDF_HACKS=1;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>
       </MinimalRebuild>
@@ -556,7 +556,7 @@
     <Midl />
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;HAVE_TESSERACT;HAVE_LEPTONICA;WIN64;_DEBUG;MEMENTO=1;MEMENTO_MUPDF_HACKS=1;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>
       </MinimalRebuild>
@@ -578,7 +578,7 @@
     <Midl />
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;TOFU_CJK_EXT=1;HAVE_TESSERACT;HAVE_LEPTONICA;WIN64;_DEBUG;MEMENTO=1;MEMENTO_MUPDF_HACKS=1;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>
       </MinimalRebuild>
@@ -598,7 +598,7 @@
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\openssl\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;..\..\thirdparty\libarchive\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\openssl\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;..\..\thirdparty\libarchive\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;HAVE_LIBARCHIVE;LIBARCHIVE_STATIC;HAVE_TESSERACT;HAVE_LEPTONICA;WIN32;_DEBUG;HAVE_LIBCRYPTO;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>
       </MinimalRebuild>
@@ -626,7 +626,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\openssl\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\openssl\include;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;..\..\thirdparty\libarchive\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\openssl\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\openssl\include;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;..\..\thirdparty\libarchive\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;HAVE_LIBARCHIVE;LIBARCHIVE_STATIC;HAVE_TESSERACT;HAVE_LEPTONICA;WIN64;_DEBUG;HAVE_LIBCRYPTO;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>
       </MinimalRebuild>
@@ -652,7 +652,7 @@
     <Midl />
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\openssl\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\openssl\include;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;..\..\thirdparty\libarchive\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\openssl\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\openssl\include;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;..\..\thirdparty\libarchive\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;HAVE_LIBARCHIVE;LIBARCHIVE_STATIC;HAVE_TESSERACT;HAVE_LEPTONICA;WIN64;_DEBUG;HAVE_LIBCRYPTO;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>
       </MinimalRebuild>
@@ -674,7 +674,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\openssl\include;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;..\..\thirdparty\libarchive\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\openssl\include;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;..\..\thirdparty\libarchive\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;HAVE_LIBARCHIVE;LIBARCHIVE_STATIC;HAVE_TESSERACT;HAVE_LEPTONICA;WIN32;NDEBUG;HAVE_LIBCRYPTO;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -699,7 +699,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\openssl\include;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;..\..\thirdparty\libarchive\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\openssl\include;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;..\..\thirdparty\libarchive\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;HAVE_LIBARCHIVE;LIBARCHIVE_STATIC;HAVE_TESSERACT;HAVE_LEPTONICA;WIN64;NDEBUG;HAVE_LIBCRYPTO;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -720,7 +720,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\openssl\include;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;..\..\thirdparty\libarchive\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\openssl\include;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;..\..\thirdparty\libarchive\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;HAVE_LIBARCHIVE;LIBARCHIVE_STATIC;HAVE_TESSERACT;HAVE_LEPTONICA;WIN64;NDEBUG;HAVE_LIBCRYPTO;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -743,7 +743,7 @@
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg/src/lib/openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg/src/lib/openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;HAVE_LEPTONICA;HAVE_TESSERACT;WIN32;_DEBUG;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>
       </MinimalRebuild>
@@ -765,7 +765,7 @@
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg/src/lib/openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg/src/lib/openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;TOFU_CJK_EXT=1;HAVE_LEPTONICA;HAVE_TESSERACT;WIN32;_DEBUG;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>
       </MinimalRebuild>
@@ -790,7 +790,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;HAVE_LEPTONICA;HAVE_TESSERACT;WIN64;_DEBUG;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>
       </MinimalRebuild>
@@ -814,7 +814,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;TOFU_CJK_EXT=1;HAVE_LEPTONICA;HAVE_TESSERACT;WIN64;_DEBUG;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>
       </MinimalRebuild>
@@ -836,7 +836,7 @@
     <Midl />
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;HAVE_LEPTONICA;HAVE_TESSERACT;WIN64;_DEBUG;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>
       </MinimalRebuild>
@@ -858,7 +858,7 @@
     <Midl />
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;TOFU_CJK_EXT=1;HAVE_LEPTONICA;HAVE_TESSERACT;WIN64;_DEBUG;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>
       </MinimalRebuild>
@@ -877,7 +877,7 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;HAVE_LEPTONICA;HAVE_TESSERACT;WIN32;NDEBUG;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -897,7 +897,7 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;TOFU_CJK_EXT=1;HAVE_LEPTONICA;HAVE_TESSERACT;WIN32;NDEBUG;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -919,7 +919,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;HAVE_LEPTONICA;HAVE_TESSERACT;WIN64;NDEBUG;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -938,7 +938,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;TOFU_CJK_EXT=1;HAVE_LEPTONICA;HAVE_TESSERACT;WIN64;NDEBUG;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -955,7 +955,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;HAVE_LEPTONICA;HAVE_TESSERACT;WIN64;NDEBUG;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -972,7 +972,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;TOFU_CJK_EXT=1;HAVE_LEPTONICA;HAVE_TESSERACT;WIN64;NDEBUG;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -990,7 +990,7 @@
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;..\..\thirdparty\libarchive\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;..\..\thirdparty\libarchive\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;HAVE_LIBARCHIVE;LIBARCHIVE_STATIC;HAVE_TESSERACT;HAVE_LEPTONICA;WIN32;_DEBUG;HAVE_LIBCRYPTO;MEMENTO=1;MEMENTO_MUPDF_HACKS=1;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>
       </MinimalRebuild>
@@ -1018,7 +1018,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;..\..\thirdparty\libarchive\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;..\..\thirdparty\libarchive\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;HAVE_LIBARCHIVE;LIBARCHIVE_STATIC;HAVE_TESSERACT;HAVE_LEPTONICA;WIN64;_DEBUG;HAVE_LIBCRYPTO;MEMENTO=1;MEMENTO_MUPDF_HACKS=1;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>
       </MinimalRebuild>
@@ -1044,7 +1044,7 @@
     <Midl />
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;..\..\thirdparty\libarchive\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\scripts\cmark-gfm;..\..\thirdparty\cmark-gfm\src;..\..\thirdparty\cmark-gfm\extensions;..\..\thirdparty\brotli\c\include;..\..\scripts\freetype;..\..\scripts\libjpeg;..\..\include;..\..\thirdparty\jbig2dec;..\..\thirdparty\libjpeg;..\..\thirdparty\libwebp;..\..\thirdparty\libwebp\src;..\..\thirdparty\gumbo-parser\src;..\..\thirdparty\openjpeg\src\lib\openjp2;..\..\thirdparty\zlib;..\..\thirdparty\freetype\include;..\..\thirdparty\mujs;..\..\thirdparty\harfbuzz\src;..\..\thirdparty\lcms2\include;..\..\thirdparty\extract\include;..\..\thirdparty\libarchive\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CMARK_GFM_STATIC_DEFINE;HAVE_LIBARCHIVE;LIBARCHIVE_STATIC;HAVE_TESSERACT;HAVE_LEPTONICA;WIN64;_DEBUG;HAVE_LIBCRYPTO;MEMENTO=1;MEMENTO_MUPDF_HACKS=1;OPJ_STATIC;HAVE_LCMS2MT=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>
       </MinimalRebuild>
@@ -1142,12 +1142,14 @@
     <ClCompile Include="..\..\source\fitz\load-gif.c" />
     <ClCompile Include="..\..\source\fitz\load-jbig2.c" />
     <ClCompile Include="..\..\source\fitz\load-jpeg.c" />
+    <ClCompile Include="..\..\source\fitz\load-jxl.c" />
     <ClCompile Include="..\..\source\fitz\load-jpx.c" />
     <ClCompile Include="..\..\source\fitz\load-jxr.c" />
     <ClCompile Include="..\..\source\fitz\load-png.c" />
     <ClCompile Include="..\..\source\fitz\load-pnm.c" />
     <ClCompile Include="..\..\source\fitz\load-psd.c" />
     <ClCompile Include="..\..\source\fitz\load-tiff.c" />
+    <ClCompile Include="..\..\source\fitz\load-webp.c" />
     <ClCompile Include="..\..\source\fitz\log.c" />
     <ClCompile Include="..\..\source\fitz\memento.c" />
     <ClCompile Include="..\..\source\fitz\memory.c" />

@@ -105,6 +105,12 @@
 /* #define FZ_ENABLE_JPX 1 */
 
 /**
+	Choose whether to enable JPEG XL decoding using an external libjxl.
+	By default, it is disabled. The Makefile enables it with jxl=yes.
+*/
+/* #define FZ_ENABLE_JXL 0 */
+
+/**
 	Choose whether to enable Brotli compression support.
 	By default, it is enabled.
 */
@@ -281,6 +287,10 @@
 #ifndef FZ_ENABLE_JPX
 #define FZ_ENABLE_JPX 1
 #endif /* FZ_ENABLE_JPX */
+
+#ifndef FZ_ENABLE_JXL
+#define FZ_ENABLE_JXL 0
+#endif /* FZ_ENABLE_JXL */
 
 #ifndef FZ_ENABLE_BROTLI
 #define FZ_ENABLE_BROTLI 1

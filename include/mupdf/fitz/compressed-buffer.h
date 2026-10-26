@@ -176,6 +176,8 @@ typedef enum fz_image_type
 	FZ_IMAGE_PNM,
 	FZ_IMAGE_TIFF,
 	FZ_IMAGE_PSD,
+	FZ_IMAGE_WEBP,
+	FZ_IMAGE_JXL,
 } fz_image_type;
 
 /**

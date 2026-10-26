@@ -288,6 +288,8 @@ static const char *img_extensions[] =
 	"tif",
 	"tiff",
 	"wdp",
+	"webp",
+	"jxl",
 	NULL
 };
 
@@ -303,6 +305,8 @@ static const char *img_mimetypes[] =
 	"image/png",
 	"image/tiff",
 	"image/vnd.ms-photo",
+	"image/webp",
+	"image/jxl",
 	"image/vnd.adobe.photoshop",
 	"image/x-jb2",
 	"image/x-jbig2",

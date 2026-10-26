@@ -84,3 +84,6 @@
 [submodule "thirdparty/cmark-gfm"]
 	path = thirdparty/cmark-gfm
 	url = ../thirdparty-cmark-gfm.git
+[submodule "thirdparty/libwebp"]
+	path = thirdparty/libwebp
+	url = https://github.com/webmproject/libwebp.git

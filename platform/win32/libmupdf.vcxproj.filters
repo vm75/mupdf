@@ -285,6 +285,9 @@
     <ClCompile Include="..\..\source\fitz\load-jpeg.c">
       <Filter>fitz</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\fitz\load-jxl.c">
+      <Filter>fitz</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\fitz\load-jpx.c">
       <Filter>fitz</Filter>
     </ClCompile>
@@ -298,6 +301,9 @@
       <Filter>fitz</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\fitz\load-tiff.c">
+      <Filter>fitz</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\fitz\load-webp.c">
       <Filter>fitz</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\fitz\memento.c">

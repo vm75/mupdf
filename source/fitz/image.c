@@ -885,6 +885,12 @@ compressed_image_get_pixmap(fz_context *ctx, fz_image *image_, fz_irect *subarea
 		)
 			fz_decode_tile(ctx, tile, image->super.decode);
 		break;
+	case FZ_IMAGE_WEBP:
+		tile = fz_load_webp(ctx, image->buffer->buffer->data, image->buffer->buffer->len);
+		break;
+	case FZ_IMAGE_JXL:
+		tile = fz_load_jxl(ctx, image->buffer->buffer->data, image->buffer->buffer->len);
+		break;
 	case FZ_IMAGE_PSD:
 		tile = fz_load_psd(ctx, image->buffer->buffer->data, image->buffer->buffer->len);
 		break;
@@ -1432,6 +1438,8 @@ fz_image_type_name(int type)
 	case FZ_IMAGE_PNG: return "png";
 	case FZ_IMAGE_PNM: return "pnm";
 	case FZ_IMAGE_TIFF: return "tiff";
+	case FZ_IMAGE_WEBP: return "webp";
+	case FZ_IMAGE_JXL: return "jxl";
 	}
 }
 
@@ -1454,12 +1462,17 @@ fz_lookup_image_type(const char *type)
 	if (!strcmp(type, "png")) return FZ_IMAGE_PNG;
 	if (!strcmp(type, "pnm")) return FZ_IMAGE_PNM;
 	if (!strcmp(type, "tiff")) return FZ_IMAGE_TIFF;
+	if (!strcmp(type, "webp")) return FZ_IMAGE_WEBP;
+	if (!strcmp(type, "jxl")) return FZ_IMAGE_JXL;
 	return FZ_IMAGE_UNKNOWN;
 }
 
 int
 fz_recognize_image_format(fz_context *ctx, unsigned char p[8])
 {
+	if ((p[0] == 0xff && p[1] == 0x0a) ||
+		!memcmp(p, "\0\0\0\x0cJXL ", 8))
+		return FZ_IMAGE_JXL;
 	if (p[0] == 'P' && p[1] >= '1' && p[1] <= '7')
 		return FZ_IMAGE_PNM;
 	if (p[0] == 'P' && (p[1] == 'F' || p[1] == 'f'))
@@ -1491,6 +1504,8 @@ fz_recognize_image_format(fz_context *ctx, unsigned char p[8])
 		return FZ_IMAGE_JBIG2;
 	if (p[0] == '8' && p[1] == 'B' && p[2] == 'P' && p[3] == 'S')
 		return FZ_IMAGE_PSD;
+	if (p[0] == 'R' && p[1] == 'I' && p[2] == 'F' && p[3] == 'F')
+		return FZ_IMAGE_WEBP;
 	return FZ_IMAGE_UNKNOWN;
 }
 
@@ -1544,6 +1559,12 @@ fz_new_image_from_buffer(fz_context *ctx, fz_buffer *buffer)
 	case FZ_IMAGE_JBIG2:
 		fz_load_jbig2_info(ctx, buf, len, &w, &h, &xres, &yres, &cspace);
 		bpc = 1;
+		break;
+	case FZ_IMAGE_WEBP:
+		fz_load_webp_info(ctx, buf, len, &w, &h, &xres, &yres, &cspace, &orientation);
+		break;
+	case FZ_IMAGE_JXL:
+		fz_load_jxl_info(ctx, buf, len, &w, &h, &xres, &yres, &cspace, &orientation);
 		break;
 	default:
 		fz_throw(ctx, FZ_ERROR_FORMAT, "unknown image file format");

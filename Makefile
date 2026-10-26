@@ -452,6 +452,22 @@ $(OUT)/storytest: docs/examples/storytest.c $(MUPDF_LIB) $(THIRD_LIB)
 $(OUT)/searchtest: docs/examples/searchtest.c $(MUPDF_LIB) $(THIRD_LIB)
 	$(LINK_CMD) $(CFLAGS) $(THIRD_LIBS)
 
+# --- Image regression tests ---
+
+.PHONY: test-webp
+test-webp: $(OUT)/test-webp
+	$<
+
+$(OUT)/test-webp: source/tests/test-webp.c $(MUPDF_LIB) $(THIRD_LIB)
+	$(LINK_CMD) $(CFLAGS) $(THIRD_LIBS) $(THREADING_LIBS) $(LIBCRYPTO_LIBS)
+
+.PHONY: test-jxl
+test-jxl: $(OUT)/test-jxl
+	$<
+
+$(OUT)/test-jxl: source/tests/test-jxl.c $(MUPDF_LIB) $(THIRD_LIB)
+	$(LINK_CMD) $(CFLAGS) $(THIRD_LIBS) $(THREADING_LIBS) $(LIBCRYPTO_LIBS)
+
 # --- Format man pages ---
 
 %.txt: %.1

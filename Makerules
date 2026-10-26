@@ -11,6 +11,17 @@ WARNING_CFLAGS := -Wall -Wsign-compare -Wshadow -Wpointer-arith
 
 build_suffix :=
 
+ifeq ($(jxl),yes)
+  build_suffix := $(build_suffix)-jxl
+  CFLAGS += -DFZ_ENABLE_JXL=1
+  USE_JXL := yes
+  SYS_LIBJXL_CFLAGS ?= $(shell pkg-config --cflags 'libjxl >= 0.12.0' 2>/dev/null)
+  SYS_LIBJXL_LIBS ?= $(shell pkg-config --libs 'libjxl >= 0.12.0' 2>/dev/null)
+  ifeq ($(strip $(SYS_LIBJXL_LIBS)),)
+    $(error jxl=yes requires libjxl >= 0.12.0; install its development package or set SYS_LIBJXL_CFLAGS and SYS_LIBJXL_LIBS)
+  endif
+endif
+
 ifeq ($(brotli),no)
   CFLAGS += -DFZ_ENABLE_BROTLI=0
   USE_BROTLI := no
@@ -207,6 +218,7 @@ SYS_JBIG2DEC_LIBS := -ljbig2dec
 SYS_JPEGXR_LIBS := -ljpegxr
 SYS_LCMS2_LIBS := -llcms2
 SYS_LIBJPEG_LIBS := -ljpeg
+SYS_LIBWEBP_LIBS := -lwebpdemux -lwebp
 SYS_MUJS_LIBS := -lmujs
 SYS_OPENJPEG_LIBS := -lopenjp2
 SYS_ZLIB_LIBS := -lz

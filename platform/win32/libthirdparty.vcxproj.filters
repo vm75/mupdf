@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="libwebp">
+      <UniqueIdentifier>{69f5afe0-2f47-4eb6-b59e-bcb1766f13df}</UniqueIdentifier>
+    </Filter>
     <Filter Include="libjpeg">
       <UniqueIdentifier>{a6adcaef-8b9e-4754-a340-907140253ce2}</UniqueIdentifier>
     </Filter>
@@ -1471,5 +1474,200 @@
     <None Include="..\..\thirdparty\brotli\c\common\dictionary.bin.br">
       <Filter>brotli\common</Filter>
     </None>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dec\alpha_dec.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dec\buffer_dec.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dec\frame_dec.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dec\idec_dec.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dec\io_dec.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dec\quant_dec.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dec\tree_dec.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dec\vp8_dec.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dec\vp8l_dec.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dec\webp_dec.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\alpha_processing.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\alpha_processing_mips_dsp_r2.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\alpha_processing_neon.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\alpha_processing_sse2.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\alpha_processing_sse41.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\cpu.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\dec.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\dec_clip_tables.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\dec_mips32.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\dec_mips_dsp_r2.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\dec_msa.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\dec_neon.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\dec_sse2.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\dec_sse41.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\filters.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\filters_mips_dsp_r2.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\filters_msa.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\filters_neon.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\filters_sse2.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\lossless.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\lossless_avx2.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\lossless_mips_dsp_r2.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\lossless_msa.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\lossless_neon.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\lossless_sse2.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\lossless_sse41.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\rescaler.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\rescaler_mips32.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\rescaler_mips_dsp_r2.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\rescaler_msa.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\rescaler_neon.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\rescaler_sse2.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\upsampling.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\upsampling_mips_dsp_r2.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\upsampling_msa.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\upsampling_neon.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\upsampling_sse2.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\upsampling_sse41.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\yuv.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\yuv_mips32.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\yuv_mips_dsp_r2.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\yuv_neon.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\yuv_sse2.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\dsp\yuv_sse41.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\utils\bit_reader_utils.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\utils\color_cache_utils.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\utils\filters_utils.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\utils\huffman_utils.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\utils\palette.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\utils\quant_levels_dec_utils.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\utils\random_utils.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\utils\rescaler_utils.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\utils\thread_utils.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\utils\utils.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\thirdparty\libwebp\src\demux\demux.c">
+      <Filter>libwebp</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
