@@ -102,10 +102,13 @@ def finish(state, path, skip_tests):
     clean()
     if state["tests"] and not skip_tests:
         prefix = "build/fork-check-" + commit("HEAD")[:12]
-        run("make", "build=debug", "OUT=" + prefix, "test-webp", "test-jxl")
-        run("make", "build=debug", "jxl=yes", "OUT=" + prefix + "-jxl", "test-webp", "test-jxl")
+        for webp, jxl in [(1, 1), (0, 1), (1, 0), (0, 0)]:
+            run("make", "build=debug", "FZ_ENABLE_WEBP=" + str(webp),
+                "FZ_ENABLE_JXL=" + str(jxl),
+                "OUT=" + prefix + "-webp" + str(webp) + "-jxl" + str(jxl),
+                "test-webp", "test-jxl")
     else:
-        print("Tests skipped. Run both codec configurations before publishing.")
+        print("Tests skipped. Run all codec configurations before publishing.")
     clean()
     run("git", "range-diff", state["old_base"] + ".." + state["old_head"],
         state["new_base"] + "..HEAD")

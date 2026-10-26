@@ -197,7 +197,7 @@ $(OUT)/thirdparty/libjpeg/%.o: thirdparty/libjpeg/%.c
 	$(CC_CMD) $(LIB_CFLAGS) $(LIBJPEG_CFLAGS) $(LIBJPEG_BUILD_CFLAGS)
 endif
 
-# --- LIBJXL (optional system library) ---
+# --- LIBJXL (system library) ---
 
 ifeq ($(USE_JXL),yes)
   THIRD_CFLAGS += $(SYS_LIBJXL_CFLAGS)
@@ -206,6 +206,7 @@ endif
 
 # --- LIBWEBP ---
 
+ifeq ($(USE_WEBP),yes)
 ifeq ($(USE_SYSTEM_LIBWEBP),yes)
   THIRD_CFLAGS += $(SYS_LIBWEBP_CFLAGS)
   THIRD_LIBS += $(SYS_LIBWEBP_LIBS)
@@ -215,6 +216,7 @@ else
   THIRD_SRC += $(LIBWEBP_SRC)
 $(OUT)/thirdparty/libwebp/%.o: thirdparty/libwebp/%.c
 	$(CC_CMD) $(LIB_CFLAGS) $(LIBWEBP_CFLAGS) $(LIBWEBP_BUILD_CFLAGS)
+endif
 endif
 
 # --- LCMS2 ---

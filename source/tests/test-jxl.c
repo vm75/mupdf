@@ -1,4 +1,4 @@
-/* Run with make jxl=yes test-jxl; without jxl=yes this checks the disabled codec. */
+/* Run with make test-jxl; FZ_ENABLE_JXL=0 checks disabled-codec behavior. */
 #include "mupdf/fitz.h"
 
 #include <stdio.h>

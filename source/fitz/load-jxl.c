@@ -243,13 +243,13 @@ fz_load_jxl_info(fz_context *ctx, const unsigned char *data, size_t size, int *w
 fz_pixmap *
 fz_load_jxl(fz_context *ctx, const unsigned char *data, size_t size)
 {
-	fz_throw(ctx, FZ_ERROR_UNSUPPORTED, "JPEG XL support requires a build with libjxl (jxl=yes)");
+	fz_throw(ctx, FZ_ERROR_UNSUPPORTED, "JPEG XL support disabled");
 }
 
 void
 fz_load_jxl_info(fz_context *ctx, const unsigned char *data, size_t size, int *w, int *h, int *xres, int *yres, fz_colorspace **cs, uint8_t *orientation)
 {
-	fz_throw(ctx, FZ_ERROR_UNSUPPORTED, "JPEG XL support requires a build with libjxl (jxl=yes)");
+	fz_throw(ctx, FZ_ERROR_UNSUPPORTED, "JPEG XL support disabled");
 }
 
 #endif

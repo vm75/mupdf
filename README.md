@@ -13,8 +13,8 @@ For general MuPDF usage, see the original [upstream README](README) and
 
 | Input | Availability | Dependency | Behavior |
 | --- | --- | --- | --- |
-| WebP (`.webp`, `image/webp`) | Enabled by default | Bundled libwebp 1.6.0, or a system libwebp | Lossy/lossless images, alpha, RGB ICC profiles, EXIF orientation and resolution; standalone and CBZ input |
-| JPEG XL (`.jxl`, `image/jxl`) | Enable with `jxl=yes` | External libjxl 0.12.0+ development files | Raw/container codestreams, grayscale/RGB, alpha, ICC profiles, and orientation; standalone and CBZ input |
+| WebP (`.webp`, `image/webp`) | Enabled by default; disable with `FZ_ENABLE_WEBP=0` | Bundled libwebp 1.6.0, or a system libwebp | Lossy/lossless images, alpha, RGB ICC profiles, EXIF orientation and resolution; standalone and CBZ input |
+| JPEG XL (`.jxl`, `image/jxl`) | Enabled by default; disable with `FZ_ENABLE_JXL=0` | External libjxl 0.12.0+ development files | Raw/container codestreams, grayscale/RGB, alpha, ICC profiles, and orientation; standalone and CBZ input |
 
 JPEG XL display output is 8-bit, including when the input has higher precision.
 Animated JPEG XL displays the first coalesced frame. Animated WebP is not
@@ -23,7 +23,7 @@ encoding and new PDF compression filters are outside their scope.
 
 ## Build and use
 
-The normal [upstream build prerequisites](docs/guide/install.md) apply. JPEG XL
+The normal [upstream build prerequisites](docs/guide/install.md) apply. The default build
 also needs `pkg-config` and libjxl 0.12.0+ headers and libraries.
 
 ```sh
@@ -32,13 +32,15 @@ cd mupdf
 git remote add upstream https://github.com/ArtifexSoftware/mupdf.git
 git -c branch.main.remote=upstream submodule update --init --recursive
 
-# WebP input; output goes to build/release/.
+# Both decoders are enabled; output goes to build/release/.
 make tools
+build/release/mutool draw -o page.png image.jxl
+build/release/mutool draw -o page-%d.png comic.cbz
 
-# WebP and JPEG XL input; output goes to build/release-jxl/.
-make jxl=yes tools
-build/release-jxl/mutool draw -o page.png image.jxl
-build/release-jxl/mutool draw -o page-%d.png comic.cbz
+# Disable either codec independently, or both.
+make FZ_ENABLE_WEBP=0 tools
+make FZ_ENABLE_JXL=0 tools
+make FZ_ENABLE_WEBP=0 FZ_ENABLE_JXL=0 tools
 ```
 
 The temporary `branch.main.remote` override resolves upstream's relative
@@ -51,10 +53,18 @@ supply `SYS_LIBJXL_CFLAGS` and `SYS_LIBJXL_LIBS` to Make. To use system WebP,
 set `USE_SYSTEM_LIBWEBP=yes`; the corresponding overrides are
 `SYS_LIBWEBP_CFLAGS` and `SYS_LIBWEBP_LIBS`.
 
-WebP has Make, Android, and Visual Studio build integration. JPEG XL is optional:
-other build systems must define `FZ_ENABLE_JXL=1` and provide compatible libjxl
-headers and link libraries. Linux builds and codec regression tests have been
-exercised; native Windows and Android builds have not been validated here.
+Like JPX, both codecs default to enabled in `include/mupdf/fitz/config.h`.
+Define `FZ_ENABLE_WEBP=0` or `FZ_ENABLE_JXL=0` to disable a codec in any build
+system. Make accepts those switches as command-line variables and also honors
+compiler defines in `XCFLAGS` or settings in `config.h`; disabled codecs do not
+require their headers or libraries in Make builds. Make uses separate `-no-webp`
+and `-no-jxl` output directories for disabled configurations.
+
+WebP has Make, Android, and Visual Studio build integration. Other build systems
+must supply libjxl headers and link libraries for the default JPEG XL enabled
+configuration, or define `FZ_ENABLE_JXL=0`. Linux builds and codec regression
+tests have been exercised; native Windows and Android builds have not been
+validated here.
 
 ## Keep the fork on top of upstream
 
@@ -90,7 +100,7 @@ on each invocation, so repeat `--base <tag>` when following stable releases.
 Each real run creates a `backup/main-<UTC timestamp>` branch before rebasing.
 It saves the plan in Git's local `fork-rebase.json`, replays only commits after
 the previous upstream base with `git rebase --onto`, synchronizes submodules,
-and runs both codec test configurations. It then prints `git range-diff` for
+and runs all four enabled/disabled codec combinations. It then prints `git range-diff` for
 review and records the new base in the local ref `refs/fork/upstream-base`.
 A failed check keeps the plan so it can be retried.
 
@@ -139,18 +149,21 @@ submodule pin and the third-party version documentation consistent.
 
 ### Validate and publish
 
-The helper uses separate build directories for the default and JPEG XL enabled
-configurations. The equivalent manual checks are:
+The helper uses separate build directories for all four codec configurations.
+The equivalent manual checks are:
 
 ```sh
 make build=debug test-webp test-jxl
-make build=debug jxl=yes test-webp test-jxl
+make build=debug FZ_ENABLE_WEBP=0 test-webp test-jxl
+make build=debug FZ_ENABLE_JXL=0 test-webp test-jxl
+make build=debug FZ_ENABLE_WEBP=0 FZ_ENABLE_JXL=0 test-webp test-jxl
 ```
 
-The first command checks WebP and JPEG XL's disabled-codec behavior. The second
-checks both decoders, including pixel output, metadata, malformed input, and
-allocation failures. Use a fresh `OUT` directory when checking a new compiler or
-changed build flags. For memory checks, use `build=sanitize` with a fresh `OUT`;
+The default checks both decoders, including pixel output, metadata, malformed
+input, and allocation failures. The other configurations verify that each codec
+can be disabled independently and reports an unsupported-codec error. Use a
+fresh `OUT` directory when checking a new compiler or changed build flags.
+For memory checks, use `build=sanitize` with a fresh `OUT`;
 ASan, UBSan, and LeakSanitizer need a supported execution environment.
 
 Review the range-diff and test results before publishing. For the first

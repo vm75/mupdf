@@ -25,6 +25,8 @@
 #include "image-imp.h"
 #include "pixmap-imp.h"
 
+#if FZ_ENABLE_WEBP
+
 #include <limits.h>
 #include <string.h>
 
@@ -293,3 +295,19 @@ fz_load_webp_info(fz_context *ctx, const unsigned char *data, size_t size, int *
 	if (orientation)
 		*orientation = info.orientation;
 }
+
+#else
+
+fz_pixmap *
+fz_load_webp(fz_context *ctx, const unsigned char *data, size_t size)
+{
+	fz_throw(ctx, FZ_ERROR_UNSUPPORTED, "WebP support disabled");
+}
+
+void
+fz_load_webp_info(fz_context *ctx, const unsigned char *data, size_t size, int *w, int *h, int *xres, int *yres, fz_colorspace **cs, uint8_t *orientation)
+{
+	fz_throw(ctx, FZ_ERROR_UNSUPPORTED, "WebP support disabled");
+}
+
+#endif /* FZ_ENABLE_WEBP */

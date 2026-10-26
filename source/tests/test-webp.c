@@ -55,9 +55,12 @@ static const unsigned char webp_lossy_alpha[] = {
 
 
 
+#if FZ_ENABLE_WEBP
 static const unsigned char rgb_samples[] = { 255,0,0, 0,255,0, 0,0,255, 255,255,255 };
 static const unsigned char rgba_samples[] = { 255,0,0,255, 0,128,0,128, 0,0,0,0, 63,30,20,64 };
 static const unsigned char lossy_samples[] = { 40,120,200, 40,120,200, 40,120,200, 40,120,200 };
+
+#endif
 
 struct test_state
 {
@@ -104,6 +107,8 @@ test_message(void *user, const char *message)
 	if (strstr(message, "UNHANDLED EXCEPTION"))
 		state->unhandled = 1;
 }
+
+#if FZ_ENABLE_WEBP
 
 static void
 put16(unsigned char *p, unsigned int value, int big_endian)
@@ -374,6 +379,33 @@ check_bad_icc_and_image(fz_context *ctx)
 		fz_rethrow(ctx);
 }
 
+#else
+
+static void
+check_disabled(fz_context *ctx, const unsigned char *data, size_t size)
+{
+	fz_buffer *buffer = fz_new_buffer_from_copied_data(ctx, data, size);
+	fz_image *image = NULL;
+	int caught = 0;
+	fz_var(image);
+	fz_var(caught);
+	fz_try(ctx)
+		image = fz_new_image_from_buffer(ctx, buffer);
+	fz_always(ctx)
+	{
+		fz_drop_image(ctx, image);
+		fz_drop_buffer(ctx, buffer);
+	}
+	fz_catch(ctx)
+	{
+		caught = fz_caught(ctx);
+		fz_report_error(ctx);
+	}
+	CHECK(ctx, caught == FZ_ERROR_UNSUPPORTED);
+}
+
+#endif
+
 int
 main(void)
 {
@@ -390,10 +422,13 @@ main(void)
 	fz_set_error_callback(ctx, test_message, &state);
 	fz_try(ctx)
 	{
+#if FZ_ENABLE_WEBP
 		unsigned char exif[78], prefixed[84];
 		size_t i;
+#endif
 		CHECK(ctx, fz_lookup_image_type("webp") == FZ_IMAGE_WEBP);
 		CHECK(ctx, !strcmp(fz_image_type_name(FZ_IMAGE_WEBP), "webp"));
+#if FZ_ENABLE_WEBP
 		check_sample(ctx, webp_rgb, sizeof(webp_rgb), rgb_samples, 0, 0);
 		check_sample(ctx, webp_rgba, sizeof(webp_rgba), rgba_samples, 1, 0);
 		check_sample(ctx, webp_lossy, sizeof(webp_lossy), lossy_samples, 0, 5);
@@ -430,6 +465,10 @@ main(void)
 		make_exif(exif, 0, 300, 1, 2);
 		for (i = 0; i < sizeof(exif); ++i)
 			check_exif(ctx, exif, i, 72, 72, -1);
+#else
+		check_disabled(ctx, webp_rgb, sizeof(webp_rgb));
+		check_disabled(ctx, webp_rgba, sizeof(webp_rgba));
+#endif
 		CHECK(ctx, !state.unhandled);
 	}
 	fz_catch(ctx)
@@ -440,6 +479,6 @@ main(void)
 	}
 	fz_drop_context(ctx);
 	if (!failed)
-		printf("WebP regression tests passed (%d checks)\n", checks);
+		printf("WebP %s tests passed (%d checks)\n", FZ_ENABLE_WEBP ? "decoder" : "disabled-build", checks);
 	return failed;
 }

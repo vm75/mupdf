@@ -120,12 +120,13 @@ class RebaseForkTests(unittest.TestCase):
         self.helper()
         self.successful(target)
         calls = self.make_calls()
-        self.assertEqual(len(calls), 2)
-        self.assertNotIn("jxl=yes", calls[0])
-        self.assertIn("jxl=yes", calls[1])
-        for call in calls:
+        self.assertEqual(len(calls), 4)
+        for call, (webp, jxl) in zip(calls, [(1, 1), (0, 1), (1, 0), (0, 0)]):
+            self.assertIn("FZ_ENABLE_WEBP=" + str(webp), call)
+            self.assertIn("FZ_ENABLE_JXL=" + str(jxl), call)
             self.assertEqual(call[-2:], ["test-webp", "test-jxl"])
-        self.assertNotEqual(calls[0][1], calls[1][2])
+        outputs = [arg for call in calls for arg in call if arg.startswith("OUT=")]
+        self.assertEqual(len(set(outputs)), 4)
 
     def test_dirty_worktree_refused_before_fetch(self):
         self.advance()
@@ -169,7 +170,7 @@ class RebaseForkTests(unittest.TestCase):
         self.helper("--continue")
         self.assertEqual(self.sha(self.fork), rebased)
         self.successful(target)
-        self.assertEqual(len(self.make_calls()), 3)
+        self.assertEqual(len(self.make_calls()), 5)
 
     def test_skip_tests_is_explicit(self):
         target = self.advance()

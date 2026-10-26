@@ -11,15 +11,12 @@ WARNING_CFLAGS := -Wall -Wsign-compare -Wshadow -Wpointer-arith
 
 build_suffix :=
 
-ifeq ($(jxl),yes)
-  build_suffix := $(build_suffix)-jxl
-  CFLAGS += -DFZ_ENABLE_JXL=1
-  USE_JXL := yes
-  SYS_LIBJXL_CFLAGS ?= $(shell pkg-config --cflags 'libjxl >= 0.12.0' 2>/dev/null)
-  SYS_LIBJXL_LIBS ?= $(shell pkg-config --libs 'libjxl >= 0.12.0' 2>/dev/null)
-  ifeq ($(strip $(SYS_LIBJXL_LIBS)),)
-    $(error jxl=yes requires libjxl >= 0.12.0; install its development package or set SYS_LIBJXL_CFLAGS and SYS_LIBJXL_LIBS)
-  endif
+# Mirror config.h switches on the Make command line when explicitly supplied.
+ifneq ($(origin FZ_ENABLE_WEBP),undefined)
+  CFLAGS += -DFZ_ENABLE_WEBP=$(FZ_ENABLE_WEBP)
+endif
+ifneq ($(origin FZ_ENABLE_JXL),undefined)
+  CFLAGS += -DFZ_ENABLE_JXL=$(FZ_ENABLE_JXL)
 endif
 
 ifeq ($(brotli),no)
@@ -417,4 +414,25 @@ ifeq "$(OS)" "pyodide"
   HAVE_OBJCOPY=no
   HAVE_LIBCRYPTO=no
   CFLAGS += -pthread
+endif
+
+# Read the effective header configuration, including XCFLAGS and cross compiler
+# settings, so disabling a codec also removes its dependency from Make builds.
+CODEC_CONFIG := $(shell printf '%s\n' '#include "mupdf/fitz/config.h"' '#if FZ_ENABLE_WEBP' 'WEBP_ENABLED' '#endif' '#if FZ_ENABLE_JXL' 'JXL_ENABLED' '#endif' | $(CC) $(CFLAGS) $(XCFLAGS) -Iinclude -E -P -x c - 2>/dev/null || echo CODEC_CONFIG_ERROR)
+ifneq ($(filter CODEC_CONFIG_ERROR,$(CODEC_CONFIG)),)
+  $(error Cannot read codec configuration; check CC, CFLAGS and XCFLAGS)
+endif
+USE_WEBP := $(if $(filter WEBP_ENABLED,$(CODEC_CONFIG)),yes,no)
+USE_JXL := $(if $(filter JXL_ENABLED,$(CODEC_CONFIG)),yes,no)
+ifeq ($(USE_WEBP),no)
+  build_suffix := $(build_suffix)-no-webp
+endif
+ifeq ($(USE_JXL),no)
+  build_suffix := $(build_suffix)-no-jxl
+else
+  SYS_LIBJXL_CFLAGS ?= $(shell pkg-config --cflags 'libjxl >= 0.12.0' 2>/dev/null)
+  SYS_LIBJXL_LIBS ?= $(shell pkg-config --libs 'libjxl >= 0.12.0' 2>/dev/null)
+  ifeq ($(strip $(SYS_LIBJXL_LIBS)),)
+    $(error JPEG XL requires libjxl >= 0.12.0; install its development package, set SYS_LIBJXL_CFLAGS/SYS_LIBJXL_LIBS, or disable it with FZ_ENABLE_JXL=0)
+  endif
 endif
