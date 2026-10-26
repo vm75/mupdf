@@ -9,6 +9,7 @@ ifeq ($(USE_SYSTEM_LIBS),yes)
   USE_SYSTEM_LCMS2 ?= no # lcms2mt is strongly preferred
   USE_SYSTEM_LIBJPEG ?= yes
   USE_SYSTEM_LIBWEBP ?= yes
+  USE_SYSTEM_LIBJXL ?= yes
   USE_SYSTEM_MUJS ?= no # not available
   USE_SYSTEM_OPENJPEG ?= yes
   USE_SYSTEM_ZLIB ?= yes
@@ -197,11 +198,27 @@ $(OUT)/thirdparty/libjpeg/%.o: thirdparty/libjpeg/%.c
 	$(CC_CMD) $(LIB_CFLAGS) $(LIBJPEG_CFLAGS) $(LIBJPEG_BUILD_CFLAGS)
 endif
 
-# --- LIBJXL (system library) ---
+# --- LIBJXL ---
 
 ifeq ($(USE_JXL),yes)
+ifeq ($(USE_SYSTEM_LIBJXL),yes)
+  SYS_LIBJXL_CFLAGS ?= $(shell pkg-config --cflags 'libjxl >= 0.12.0' 2>/dev/null)
+  SYS_LIBJXL_LIBS ?= $(shell pkg-config --libs 'libjxl >= 0.12.0' 2>/dev/null)
+  ifeq ($(strip $(SYS_LIBJXL_LIBS)),)
+    $(error System JPEG XL requires libjxl >= 0.12.0; set SYS_LIBJXL_CFLAGS/SYS_LIBJXL_LIBS or use bundled libjxl)
+  endif
   THIRD_CFLAGS += $(SYS_LIBJXL_CFLAGS)
   THIRD_LIBS += $(SYS_LIBJXL_LIBS)
+else
+  THIRD_CFLAGS += $(LIBJXL_CFLAGS)
+  THIRD_LIBS += $(LIBJXL_ARCHIVES) $(LIBJXL_RUNTIME_LIBS)
+$(LIBJXL_ARCHIVES): $(LIBJXL_BUILD_DIR)/.built
+	@test -f $@ || { python3 scripts/build-host-jxl.py --source thirdparty/libjxl --build $(LIBJXL_BUILD_DIR); touch $(LIBJXL_BUILD_DIR)/.built; }
+$(LIBJXL_BUILD_DIR)/.built: scripts/build-host-jxl.py platform/jxl/CMakeLists.txt thirdparty/libjxl/CMakeLists.txt thirdparty/libjxl/lib/CMakeLists.txt
+	python3 scripts/build-host-jxl.py --source thirdparty/libjxl --build $(LIBJXL_BUILD_DIR)
+	@mkdir -p $(dir $@) && touch $@
+$(OUT)/source/fitz/load-jxl.o: $(LIBJXL_ARCHIVES)
+endif
 endif
 
 # --- LIBWEBP ---

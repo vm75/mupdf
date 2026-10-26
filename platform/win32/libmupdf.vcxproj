@@ -261,6 +261,10 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup>
+    <FZ_ENABLE_JXL Condition="'$(FZ_ENABLE_JXL)'==''">1</FZ_ENABLE_JXL>
+    <MUPDF_JXL_BUILD_DIR>$(SolutionDir)..\..\build\libjxl-win\$(Platform)\$(Configuration)</MUPDF_JXL_BUILD_DIR>
+  </PropertyGroup>
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='MementoExtra|Win32'" Label="PropertySheets">
@@ -1438,6 +1442,12 @@
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\thirdparty\libjxl\lib\include;$(MUPDF_JXL_BUILD_DIR)\libjxl\lib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>FZ_ENABLE_JXL=$(FZ_ENABLE_JXL);JXL_STATIC_DEFINE;JXL_CMS_STATIC_DEFINE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

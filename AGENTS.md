@@ -10,8 +10,11 @@ upstream rebase workflow; preserve the original upstream [README](README).
 - `source/fitz/image.c`, `image-imp.h`: image recognition and dispatch.
 - `include/mupdf/fitz/`: codec types and feature configuration.
 - `source/cbz/`: standalone image and CBZ registration.
+- `thirdparty/libjxl/`: pinned JPEG XL source and decoder dependencies.
+- `platform/jxl/`: host CMake integration for the pinned JPEG XL decoder.
 - `Makelists`, `Makerules`, `Makethird`, `platform/`: build integration.
 - `source/tests/test-webp.c`, `test-jxl.c`, `test-document-options.c`: regressions.
+- `scripts/build-host-jxl.py`: Make's pinned JPEG XL decoder build.
 - `scripts/build-android-jxl.py`, `platform/android/jxl/`: Android decoder SDK.
 - [Document options](docs/guide/document-options.md): APIs, image indexes, overlay migration.
 - [Android codecs](docs/guide/android-codecs.md): native setup and embedding.
@@ -25,8 +28,11 @@ upstream rebase workflow; preserve the original upstream [README](README).
 - Preserve RGB/gray channel validation, premultiplied alpha, bounded metadata
   parsing, and exception/resource cleanup when adapting the decoders.
 - Keep both codecs enabled by default, with independent `FZ_ENABLE_WEBP=0`
-  and `FZ_ENABLE_JXL=0` switches that remove their Make dependencies.
-- Keep the libwebp pin, source lists, and dependency documentation consistent.
+  and `FZ_ENABLE_JXL=0` switches that remove their build dependencies.
+- Keep the libwebp and libjxl pins, source lists, platform integration, and
+  dependency documentation consistent. At each dependency update, pin both
+  codecs to their respective latest stable upstream releases, and document the
+  verified versions and build requirements together.
 - Keep optional presentation behavior generic, independent, and off by default.
   Preserve context initialization/cloning and standard CSS behavior outside the
   specific opted-in property. Keep filesystem image lookup limited to indexes.

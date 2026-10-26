@@ -29,8 +29,8 @@ def build(args, abi):
     version = tuple(int(re.search(r"#define JPEGXL_" + part + r"_VERSION\s+(\d+)",
                                   header.read_text()).group(1))
                     for part in ("MAJOR", "MINOR", "PATCH"))
-    if version < (0, 12, 0):
-        raise ValueError("libjxl 0.12.0 or newer is required")
+    if version != (0, 12, 0):
+        raise ValueError("this fork is pinned to libjxl v0.12.0")
     run("cmake", "--build", work, "--target", "jxl_dec", "jxl_cms",
         "--parallel", args.jobs)
     archives = (work / "mupdf-jxl-archives.txt").read_text().splitlines()
@@ -73,8 +73,8 @@ def build(args, abi):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--source", type=Path, required=True,
-                        help="libjxl 0.12.0+ checkout with its submodules initialized")
+    parser.add_argument("--source", type=Path, default=ROOT / "thirdparty/libjxl",
+                        help="libjxl v0.12.0 source (default: pinned thirdparty submodule)")
     parser.add_argument("--ndk", type=Path, required=True)
     parser.add_argument("--output", type=Path, default=ROOT / "build/android-jxl")
     parser.add_argument("--abis", nargs="+", choices=ABIS, default=list(ABIS))

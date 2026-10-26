@@ -68,8 +68,11 @@ def main_branch():
 
 def submodules():
     # Upstream's relative URLs must not resolve against vm75/mupdf's origin.
-    run("git", "-c", "branch.main.remote=upstream", "submodule", "sync", "--recursive")
-    run("git", "-c", "branch.main.remote=upstream", "submodule", "update", "--init", "--recursive")
+    run("git", "-c", "branch.main.remote=upstream", "submodule", "sync")
+    run("git", "-c", "branch.main.remote=upstream", "submodule", "update", "--init")
+    if (ROOT / "thirdparty/libjxl/.git").exists() or (ROOT / "thirdparty/libjxl/.git").is_file():
+        run("git", "-C", "thirdparty/libjxl", "submodule", "sync", "third_party/brotli", "third_party/highway", "third_party/skcms")
+        run("git", "-C", "thirdparty/libjxl", "submodule", "update", "--init", "third_party/brotli", "third_party/highway", "third_party/skcms")
 
 
 def old_base(explicit):

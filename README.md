@@ -17,8 +17,14 @@ For general MuPDF usage, see the original [upstream README](README) and
 
 | Input | Availability | Dependency | Behavior |
 | --- | --- | --- | --- |
-| WebP (`.webp`, `image/webp`) | Enabled by default; disable with `FZ_ENABLE_WEBP=0` | Bundled libwebp 1.6.0, or a system libwebp | Lossy/lossless images, alpha, RGB ICC profiles, EXIF orientation and resolution; standalone and CBZ input |
-| JPEG XL (`.jxl`, `image/jxl`) | Enabled by default; disable with `FZ_ENABLE_JXL=0` | External libjxl 0.12.0+ development files | Raw/container codestreams, grayscale/RGB, alpha, ICC profiles, and orientation; standalone and CBZ input |
+| WebP (`.webp`, `image/webp`) | Enabled by default; disable with `FZ_ENABLE_WEBP=0` | Pinned libwebp 1.6.0 submodule, or optional system libwebp | Lossy/lossless images, alpha, RGB ICC profiles, EXIF orientation and resolution; standalone and CBZ input |
+| JPEG XL (`.jxl`, `image/jxl`) | Enabled by default; disable with `FZ_ENABLE_JXL=0` | Pinned libjxl v0.12.0 submodule, with Highway, Brotli and skcms dependencies; optional system libjxl | Raw/container codestreams, grayscale/RGB, alpha, ICC profiles, and orientation; standalone and CBZ input |
+
+These pins are the latest stable upstream releases verified for this update:
+[libwebp v1.6.0](https://chromium.googlesource.com/webm/libwebp/+/refs/tags/v1.6.0/)
+and [libjxl v0.12.0](https://github.com/libjxl/libjxl/releases/tag/v0.12.0).
+When updating either dependency, check its upstream stable releases and update
+both submodule pins and their build configuration together.
 
 JPEG XL display output is 8-bit, including when the input has higher precision.
 Animated JPEG XL displays the first coalesced frame. Animated WebP is not
@@ -27,14 +33,16 @@ encoding and new PDF compression filters are outside their scope.
 
 ## Build and use
 
-The normal [upstream build prerequisites](docs/guide/install.md) apply. The default build
-also needs `pkg-config` and libjxl 0.12.0+ headers and libraries.
+The normal [upstream build prerequisites](docs/guide/install.md) apply. The
+default JPEG XL build also needs CMake and a C++17 compiler; its pinned source
+and decoder dependencies are fetched with the submodule commands below.
 
 ```sh
 git clone --branch main https://github.com/vm75/mupdf.git
 cd mupdf
 git remote add upstream https://github.com/ArtifexSoftware/mupdf.git
-git -c branch.main.remote=upstream submodule update --init --recursive
+git -c branch.main.remote=upstream submodule update --init
+git -C thirdparty/libjxl submodule update --init third_party/brotli third_party/highway third_party/skcms
 
 # Both decoders are enabled; output goes to build/release/.
 make tools
@@ -49,11 +57,13 @@ make FZ_ENABLE_WEBP=0 FZ_ENABLE_JXL=0 tools
 
 The temporary `branch.main.remote` override resolves upstream's relative
 submodule URLs against Artifex, even when `main` tracks this fork's `origin/main`.
-The bundled libwebp URL is absolute and is unaffected.
+The targeted libjxl command fetches only decoder dependencies; its test data and
+encoder-only dependencies are not needed here. The bundled libwebp URL is
+absolute and is unaffected.
 
-For a custom libjxl installation, set `PKG_CONFIG_PATH` to its pkg-config
-directory and configure the platform's runtime library search path. Alternatively,
-supply `SYS_LIBJXL_CFLAGS` and `SYS_LIBJXL_LIBS` to Make. To use system WebP,
+To use a system libjxl instead of the pinned source, set
+`USE_SYSTEM_LIBJXL=yes`; provide a libjxl 0.12.0 installation through pkg-config,
+or set `SYS_LIBJXL_CFLAGS` and `SYS_LIBJXL_LIBS`. To use system WebP,
 set `USE_SYSTEM_LIBWEBP=yes`; the corresponding overrides are
 `SYS_LIBWEBP_CFLAGS` and `SYS_LIBWEBP_LIBS`.
 
@@ -64,12 +74,15 @@ compiler defines in `XCFLAGS` or settings in `config.h`; disabled codecs do not
 require their headers or libraries in Make builds. Make uses separate `-no-webp`
 and `-no-jxl` output directories for disabled configurations.
 
-WebP has Make, Android, and Visual Studio build integration. For Android JPEG XL,
-use the [Android codec SDK helper and NDK integration](docs/guide/android-codecs.md).
-Other build systems must supply libjxl headers and link libraries for the default
-JPEG XL enabled configuration, or define `FZ_ENABLE_JXL=0`. Linux codec and
-document-option tests are available; native Windows builds and Android device
-execution have not been validated here.
+Both codecs use pinned source submodules and are enabled by default in Make,
+Android and Visual Studio builds. Visual Studio requires Python 3, CMake, and
+the VS 2019 C++ toolset; it builds libjxl from the pinned source automatically.
+Android JPEG XL is compiled into a static SDK per ABI by the
+[codec SDK helper](docs/guide/android-codecs.md). Other build systems should
+initialize the libjxl v0.12.0 submodule and build its decoder, Highway, Brotli
+and skcms dependencies, or disable JPEG XL with `FZ_ENABLE_JXL=0`. Linux codec
+and document-option tests are available; native Windows builds and Android
+device execution have not been validated here.
 
 ## Keep the fork on top of upstream
 
@@ -149,8 +162,9 @@ below before publishing.
 
 Pay particular attention to format recognition, image type dispatch and metadata,
 CBZ extensions, ICC channel counts, alpha premultiplication, exception cleanup,
-Make dependency lists, and the Android/Windows source lists. Keep libwebp's
-submodule pin and the third-party version documentation consistent.
+Make dependency lists, and the Android/Windows source lists. Keep both codec
+submodule pins current with their latest stable upstream releases, and keep the
+build configuration and third-party version documentation consistent.
 
 ### Validate and publish
 

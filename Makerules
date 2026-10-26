@@ -429,10 +429,4 @@ ifeq ($(USE_WEBP),no)
 endif
 ifeq ($(USE_JXL),no)
   build_suffix := $(build_suffix)-no-jxl
-else
-  SYS_LIBJXL_CFLAGS ?= $(shell pkg-config --cflags 'libjxl >= 0.12.0' 2>/dev/null)
-  SYS_LIBJXL_LIBS ?= $(shell pkg-config --libs 'libjxl >= 0.12.0' 2>/dev/null)
-  ifeq ($(strip $(SYS_LIBJXL_LIBS)),)
-    $(error JPEG XL requires libjxl >= 0.12.0; install its development package, set SYS_LIBJXL_CFLAGS/SYS_LIBJXL_LIBS, or disable it with FZ_ENABLE_JXL=0)
-  endif
 endif

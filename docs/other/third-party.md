@@ -9,7 +9,7 @@ These are the third party libraries used by MuPDF.
 |[harfbuzz](http://www.harfbuzz.org/)|6.0.0 with patches|Text shaping|MIT-style|
 |[libjpeg](http://www.ijg.org/)|10.0 with patches|JPEG decoding|BSD-style|
 |[libwebp](https://www.webmproject.org/)|1.6.0|WebP decoding|BSD-style|
-|[libjxl](https://github.com/libjxl/libjxl)|0.12.0 or later (external)|JPEG XL decoding|BSD-style|
+|[libjxl](https://github.com/libjxl/libjxl)|0.12.0 (pinned submodule)|JPEG XL decoding|BSD-style|
 |[Incompatible fork of lcms2](http://cgit.ghostscript.com/cgi-bin/cgit.cgi/thirdparty-lcms2.git/)|2.16 with patches|Color management|MIT-style|
 |[openjpeg](http://www.openjpeg.org/)|2.5.4 with upstream and local patches|JPEG 2000 decoding|BSD-style|
 |[zlib](http://www.zlib.net/)|1.3.2|Deflate compression|zlib License|
@@ -25,17 +25,22 @@ These are the third party libraries used by MuPDF.
 |[Zint](https://www.zint.org.uk/)|2.13.0.9|Zxing-cpp dependency|BSD-style|
 |[Zxing-cpp](https://github.com/zxing-cpp/zxing-cpp)|2.3.0 with patches|Barcode decoding/encoding|Apache 2.0|
 
-WebP and JPEG XL input are enabled by default. JPEG XL requires the `libjxl`
-development package (version 0.12.0 or later), discoverable by `pkg-config`.
-Disable either codec with `FZ_ENABLE_WEBP=0` or `FZ_ENABLE_JXL=0`; Make accepts
-these variables and reads the same switches from compiler flags or `config.h`.
-Disabled codecs do not require their dependencies in Make builds.
-Custom installations can set `SYS_LIBJXL_CFLAGS` and `SYS_LIBJXL_LIBS`.
-Android builds can use the [decoder SDK helper](../guide/android-codecs.md),
-which bundles the libjxl decoder, skcms color management, Highway and Brotli
-into a static archive per ABI and preserves their license notices. Other build
-systems must supply the same headers and libraries for the default configuration,
-or disable JPEG XL with `FZ_ENABLE_JXL=0`. JPEG XL supports `.jxl`
+WebP and JPEG XL input are enabled by default. The pinned libwebp v1.6.0 and
+libjxl v0.12.0 dependencies are each the latest stable upstream releases
+verified for this update. Future dependency updates should check the latest
+stable release for each project and update both pins, build configurations and
+version documentation together. The pinned libjxl submodule builds its decoder
+with bundled Highway, Brotli and skcms dependencies.
+Make uses CMake and a C++17 compiler for this build. Visual Studio builds the
+same pinned sources through CMake and Python 3. Set `USE_SYSTEM_LIBJXL=yes` in
+Make to use an installed libjxl 0.12.0 or newer package instead; custom installations can set
+`SYS_LIBJXL_CFLAGS` and `SYS_LIBJXL_LIBS`. Disable either codec with
+`FZ_ENABLE_WEBP=0` or `FZ_ENABLE_JXL=0`; Make accepts these variables and reads
+the same switches from compiler flags or `config.h`. Disabled codecs do not
+require their dependencies in Make builds. Android uses the
+[decoder SDK helper](../guide/android-codecs.md) to bundle the same pinned source
+and dependencies into a static archive per ABI, with license notices. JPEG XL
+supports `.jxl`
 image and CBZ input, displaying the first coalesced frame as 8-bit grayscale or
 RGB, with alpha and ICC color profiles.
 

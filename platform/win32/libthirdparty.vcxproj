@@ -93,6 +93,21 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup>
+    <FZ_ENABLE_JXL Condition="'$(FZ_ENABLE_JXL)'==''">1</FZ_ENABLE_JXL>
+    <MUPDF_JXL_BUILD_CONFIG Condition="'$(Configuration)'=='Debug'">Debug</MUPDF_JXL_BUILD_CONFIG>
+    <MUPDF_JXL_BUILD_CONFIG Condition="'$(Configuration)'!='Debug'">Release</MUPDF_JXL_BUILD_CONFIG>
+    <MUPDF_JXL_BUILD_DIR>$(SolutionDir)..\..\build\libjxl-win\$(Platform)\$(Configuration)</MUPDF_JXL_BUILD_DIR>
+    <MUPDF_JXL_ARCHIVE_DIR>$(MUPDF_JXL_BUILD_DIR)\lib</MUPDF_JXL_ARCHIVE_DIR>
+  </PropertyGroup>
+  <Target Name="BuildPinnedLibJxl" BeforeTargets="ClCompile" Condition="'$(FZ_ENABLE_JXL)'!='0'">
+    <Exec Command="python ..\..\scripts\build-host-jxl.py --source ..\..\thirdparty\libjxl --build &quot;$(MUPDF_JXL_BUILD_DIR)&quot; --generator &quot;Visual Studio 16 2019&quot; --arch $(Platform) --config $(MUPDF_JXL_BUILD_CONFIG)" />
+  </Target>
+  <ItemDefinitionGroup>
+    <Lib>
+      <AdditionalDependencies Condition="'$(FZ_ENABLE_JXL)'!='0'">$(MUPDF_JXL_ARCHIVE_DIR)\jxl_dec.lib;$(MUPDF_JXL_ARCHIVE_DIR)\jxl_cms.lib;$(MUPDF_JXL_ARCHIVE_DIR)\hwy.lib;$(MUPDF_JXL_ARCHIVE_DIR)\brotlidec.lib;$(MUPDF_JXL_ARCHIVE_DIR)\brotlicommon.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">

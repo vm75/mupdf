@@ -294,6 +294,22 @@ LIBWEBP_SRC += thirdparty/libwebp/src/utils/thread_utils.c
 LIBWEBP_SRC += thirdparty/libwebp/src/utils/utils.c
 LIBWEBP_SRC += thirdparty/libwebp/src/demux/demux.c
 
+# --- LIBJXL ---
+
+LIBJXL_BUILD_DIR = $(OUT)/libjxl
+LIBJXL_CFLAGS += -Ithirdparty/libjxl/lib/include
+LIBJXL_CFLAGS += -I$(LIBJXL_BUILD_DIR)/libjxl/lib/include
+LIBJXL_ARCHIVES = $(LIBJXL_BUILD_DIR)/lib/libjxl_dec.a
+LIBJXL_ARCHIVES += $(LIBJXL_BUILD_DIR)/lib/libjxl_cms.a
+LIBJXL_ARCHIVES += $(LIBJXL_BUILD_DIR)/lib/libhwy.a
+LIBJXL_ARCHIVES += $(LIBJXL_BUILD_DIR)/lib/libbrotlidec.a
+LIBJXL_ARCHIVES += $(LIBJXL_BUILD_DIR)/lib/libbrotlicommon.a
+ifeq ($(OS),Darwin)
+LIBJXL_RUNTIME_LIBS += -lc++ -pthread -lm
+else
+LIBJXL_RUNTIME_LIBS += -lstdc++ -pthread -ldl -lm
+endif
+
 # --- LCMS2 (multi-threaded fork) ---
 
 LCMS2_CFLAGS += -Ithirdparty/lcms2/include
